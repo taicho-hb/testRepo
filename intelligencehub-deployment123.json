@@ -222,7 +222,7 @@
         "requestTimeoutMS" : 5000,
         "cleanSession" : true,
         "clientId" : "mqtt",
-        "ssl" : true,
+        "ssl" : false,
         "redundantBrokers" : [ ],
         "inputDiscovery" : "",
         "maxInflight" : 1000,
@@ -468,6 +468,14 @@
     } ],
     "conditions" : [ {
       "name" : "test",
+      "uri" : "condition.custom",
+      "tags" : [ ],
+      "settings" : {
+        "inReferences" : [ "{{Connection.opc.Motor001_PLC_param}}" ],
+        "expression" : "{{this.currentValue}}"
+      }
+    }, {
+      "name" : "test_copy",
       "uri" : "condition.custom",
       "tags" : [ ],
       "settings" : {
@@ -1650,6 +1658,45 @@
           } ]
         } ]
       }, {
+        "name" : "motor",
+        "tags" : [ ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "ID",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Error",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Amps",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Speed",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Vibration",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
         "name" : "motorModel",
         "tags" : [ ],
         "attributes" : [ {
@@ -1736,6 +1783,17 @@
         }, {
           "attributeType" : "Internal",
           "name" : "lastServiceNotes",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "test",
+        "tags" : [ ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "test1",
           "nullable" : false,
           "required" : false,
           "array" : false,
@@ -4358,6 +4416,277 @@
         "type" : "default"
       }
     }, {
+      "name" : "motor001_to_mqtt_observable_copy",
+      "tags" : [ "starter_solution" ],
+      "inputStages" : [ "Read" ],
+      "stages" : [ {
+        "name" : "To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 2490,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.mqtt}}",
+          "qualifier" : {
+            "topic" : "new/{{event.value.site}}/{{event.value.area}}/{{event.value.line}}/assets/motors/{{event.value.motorId}} ",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Read_2",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ "Transform" ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "get_motor001_service_info_copy",
+            "params" : {
+              "motorId" : "{{event.value.ID}}"
+            },
+            "pick" : "",
+            "connectionName" : "sql"
+          }
+        },
+        "outputs" : [ "Model" ]
+      }, {
+        "name" : "Breakup_1",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".BreakupConfig",
+          "breakupType" : "array"
+        },
+        "outputs" : [ "Filter" ]
+      }, {
+        "name" : "Model",
+        "display" : {
+          "position" : {
+            "x" : 2040,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "motors",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "motorId",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value[0].machineid;"
+            }
+          }, {
+            "name" : "site",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return System.Variables.Site;"
+            }
+          }, {
+            "name" : "area",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return System.Variables.Area;"
+            }
+          }, {
+            "name" : "line",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return System.Variables.Line;"
+            }
+          }, {
+            "name" : "amps",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.motorXxxFilter1.Amps;"
+            }
+          }, {
+            "name" : "speed",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.motorXxxFilter1.Speed;"
+            }
+          }, {
+            "name" : "vibration",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.motorXxxFilter1.Vibration;"
+            }
+          }, {
+            "name" : "error",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.motorXxxFilter1.Error;"
+            }
+          }, {
+            "name" : "lastServiceDate",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value[0].lastservicedate;"
+            }
+          }, {
+            "name" : "lastServiceNotes",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value[0].Notes;"
+            }
+          } ]
+        },
+        "outputs" : [ "To_MQTT" ]
+      }, {
+        "name" : "Filter",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".AttributeFilterConfig",
+          "filterOption" : "include",
+          "filterList" : [ {
+            "filterType" : "exactPathFilter",
+            "filterText" : "ID"
+          } ],
+          "retainAsMetadata" : true,
+          "metadataKey" : "motorXxxFilter1"
+        },
+        "outputs" : [ "Read_2" ]
+      }, {
+        "name" : "Switch",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 135
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.value.ID!==\"MOTOR005\")",
+            "outputs" : [ "Read_2" ],
+            "description" : "Value Is True"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 2040,
+            "y" : 135
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Read",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "Motor001_PLC",
+            "params" : {
+              "motorNumber" : ""
+            },
+            "pick" : "",
+            "connectionName" : "opc"
+          }
+        },
+        "outputs" : [ "Breakup_1" ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "PolledTrigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".TriggerPolled",
+          "enabled" : false,
+          "interval" : {
+            "duration" : 1,
+            "units" : "Seconds"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : false,
+          "parameters" : {
+            "type" : "inline",
+            "model" : {
+              "name" : "params",
+              "tags" : [ ],
+              "attributes" : [ {
+                "attributeType" : "Internal",
+                "name" : "att1",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "Any"
+              }, {
+                "attributeType" : "Internal",
+                "name" : "att2",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "Any"
+              } ]
+            }
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
       "name" : "pi2csv",
       "tags" : [ ],
       "inputStages" : [ "Read" ],
@@ -4759,12 +5088,12 @@
         "backupCopies" : 50
       },
       "hbMqttBroker" : {
-        "enabled" : false,
+        "enabled" : true,
         "allowAnonymous" : true,
         "endpoints" : [ {
           "hostname" : "0.0.0.0",
           "port" : 1885,
-          "useSSL" : true,
+          "useSSL" : false,
           "certificateKeyAlias" : "app-certificate-private-key",
           "protocol" : "mqtt.tcp"
         }, {
@@ -4819,13 +5148,13 @@
           "email" : "",
           "auth" : {
             "type" : "pass",
-            "username" : "taicho-hb",
+            "username" : "taicho",
             "password" : {
               "type" : "Encrypted",
               "value" : {
                 "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
-                "iv" : "CNpGrAXk2JSj6mNH1E4TGA==",
-                "ciphertext" : "uSmBj8SfCU9IJzKInLRjeEE/UaBipgUc41mblSuNTExyEGAtw0D9/AuSYkHZ5rgnPjoXOdIYRd/PmYY4sRwpd9XVHiFPSRWqZEXlU3R3f3c9xOGklzk4tzAwch548FMs"
+                "iv" : "lqqfSegaLEJsvfObaNZdxg==",
+                "ciphertext" : "zRWXt0Tt3H3bNwtll55G6X/OBKbG9fmHIo+OcwXpcwtCaLcbYaeHhD8TvFOXlKlX"
               }
             }
           }
