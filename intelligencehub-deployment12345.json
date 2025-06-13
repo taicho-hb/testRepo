@@ -3490,14 +3490,14 @@
           "units" : "Hours"
         },
         "breakupArrays" : false,
-        "table" : "TestTableHyperTime",
+        "table" : "TestTableHyperInt",
         "createHypertable" : true,
-        "partitionType" : "timespan",
+        "partitionType" : "integer",
         "partitionInterval" : {
           "duration" : 1,
           "units" : "Minutes"
         },
-        "partitionNumber" : 1,
+        "partitionNumber" : 3,
         "partitionBy" : "col1",
         "filterList" : [ ]
       }
