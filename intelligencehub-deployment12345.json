@@ -1086,6 +1086,29 @@
         "expression" : "([\r\n\t{\r\n\t\t\"Total Power Consumption\": 111.90950535829926,\r\n\t\t\"Total Downtime\": 2736726.364487618,\r\n\t\t\"Avg Power Consumption\": 17.742266799483023,\r\n\t\t\"Avg 30d Downtime\": 675.7467312000399\r\n\t}\r\n])"
       }
     }, {
+      "name" : "calc",
+      "uri" : "condition.aggregate",
+      "tags" : [ ],
+      "settings" : {
+        "scanInterval" : {
+          "units" : "Seconds",
+          "duration" : 1
+        },
+        "storageInterval" : {
+          "units" : "Minutes",
+          "duration" : 10
+        },
+        "window" : {
+          "type" : "sliding",
+          "windowInterval" : {
+            "units" : "Minutes",
+            "duration" : 1
+          }
+        },
+        "enabled" : true,
+        "inReferences" : [ "{{Connection.opc.Motor001_PLC_Amps}}" ]
+      }
+    }, {
       "name" : "db",
       "uri" : "condition.deadband",
       "tags" : [ ],
