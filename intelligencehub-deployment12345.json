@@ -1003,7 +1003,7 @@
       }
     }, {
       "name" : "ts",
-      "uri" : "jdbc.timescaledb://localhost:5432",
+      "uri" : "jdbc.timescaledb://localhost:5433",
       "tags" : [ ],
       "writes" : {
         "flattenModeledValues" : false
@@ -1027,8 +1027,8 @@
           "type" : "Encrypted",
           "value" : {
             "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
-            "iv" : "2q8ZDmm3b3qbthHxuiIDZg==",
-            "ciphertext" : "kVzLgbVoikF7siwo8R+qzQ=="
+            "iv" : "5O6s5Ha4YDxzhcUyZ02J2Q==",
+            "ciphertext" : "CSnWC68FoYx9D+iAdiOc5g=="
           }
         }
       }
