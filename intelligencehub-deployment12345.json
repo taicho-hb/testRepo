@@ -7903,8 +7903,34 @@
     }, {
       "name" : "TestUnixTime",
       "tags" : [ ],
-      "inputStages" : [ ],
-      "stages" : [ ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 227,
+            "y" : -15
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "const ts = System.Internal.DateTime.getTime();\r\nstage.setValue(ts);"
+        },
+        "outputs" : [ "Transform_1" ]
+      }, {
+        "name" : "Transform_1",
+        "display" : {
+          "position" : {
+            "x" : 612,
+            "y" : -1
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      } ],
       "trackActivity" : false,
       "triggers" : [ ],
       "errorHandler" : {
