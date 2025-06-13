@@ -3491,7 +3491,7 @@
       "type" : "jdbc.timescaledb",
       "qualifier" : {
         "writeType" : "insert",
-        "createOption" : "create",
+        "createOption" : "create_and_update",
         "tableCacheInterval" : {
           "duration" : 1,
           "units" : "Hours"
@@ -3506,7 +3506,7 @@
         },
         "partitionNumber" : 1,
         "partitionBy" : "col1",
-        "filterList" : [ "_name", "_timestamp", "_model" ]
+        "filterList" : [ ]
       }
     } ],
     "modeling" : {
