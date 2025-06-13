@@ -1,0 +1,2150 @@
+{
+  "productInfo" : {
+    "company" : "HighByte",
+    "product" : "IntelligenceHub",
+    "version" : "4.2.0",
+    "build" : "2025.6.6.256",
+    "stage" : "Alpha"
+  },
+  "project" : {
+    "version" : 11,
+    "connections" : [ {
+      "name" : "SqliteOpenAiHistory",
+      "uri" : "jdbc.sqlite://SqliteOpenAiHistory",
+      "tags" : [ "OpenAiChatHistory" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "strategy" : {
+          "type" : "default"
+        },
+        "database" : "OpenAiHistory.db"
+      }
+    }, {
+      "name" : "crate",
+      "uri" : "rest.client://crate",
+      "tags" : [ "WriteToCrate" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "authentication" : {
+          "type" : "Basic Auth",
+          "options" : {
+            "username" : "highbyte",
+            "password" : {
+              "type" : "Encrypted",
+              "value" : {
+                "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+                "iv" : "lDypl615QUmKOcSGMGT2ig==",
+                "ciphertext" : "98DnM6EwMylcMYuIY7E4VQ=="
+              }
+            }
+          }
+        },
+        "baseURL" : "https://harlequin-wat-tambor.eks1.us-east-1.aws.cratedb.net:4200",
+        "ignoreCertificate" : false
+      }
+    }, {
+      "name" : "cratejdbc",
+      "uri" : "jdbc://1.2.3.4:1234",
+      "tags" : [ "WriteToCrate" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "strategy" : {
+          "type" : "default"
+        },
+        "username" : "highbyte",
+        "classPath" : "io.crate.client.jdbc.CrateDriver",
+        "database" : "",
+        "connectString" : "jdbc:crate://harlequin-wat-tambor.eks1.us-east-1.aws.cratedb.net:5432/",
+        "sqlSyntax" : "postgresql",
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+            "iv" : "n1zdhdp4AEmK67MIPbMLtA==",
+            "ciphertext" : "YfoI0aLalHrxKnW1rN/tJw=="
+          }
+        }
+      }
+    }, {
+      "name" : "kafka",
+      "uri" : "kafka://kafka",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "securityType" : "PLAINTEXT",
+        "brokerURIs" : "rwar"
+      }
+    }, {
+      "name" : "ollamaRest",
+      "uri" : "rest.client://ollamaRest",
+      "tags" : [ "OpenAiChatHistory" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "authentication" : {
+          "type" : "None",
+          "options" : { }
+        },
+        "baseURL" : "http://host.docker.internal:11434/v1"
+      }
+    }, {
+      "name" : "piremote",
+      "uri" : "osisoft.afsdk://44.237.170.95:45290",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "connectTimeoutSeconds" : 5,
+        "requestTimeoutMS" : 30000,
+        "compression" : "GZIP",
+        "auth" : {
+          "type" : "credentials",
+          "username" : "osisoft",
+          "password" : {
+            "type" : "Encrypted",
+            "value" : {
+              "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+              "iv" : "8NuLPk6kKB9hSQFYn9Dhsw==",
+              "ciphertext" : "xA9hXif6fVI7OAOQqgem1w=="
+            }
+          }
+        },
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+            "iv" : "EWpcyY6Z6Lu47SZeFJ57BQ==",
+            "ciphertext" : "hUns7q7iplNAW/pXFabN2A=="
+          }
+        }
+      }
+    }, {
+      "name" : "s3",
+      "uri" : "aws.s3://s3",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "accessKey" : "test",
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+            "iv" : "pVMTneF38Hx2RMpFXgoDSw==",
+            "ciphertext" : "51HJ5Wahmhj9l9GfkGkieA=="
+          }
+        },
+        "region" : "test",
+        "endpoint" : "test"
+      }
+    }, {
+      "name" : "sqlite",
+      "uri" : "jdbc.sqlite://sqlite",
+      "tags" : [ "SqliteDtTest" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "strategy" : {
+          "type" : "default"
+        },
+        "database" : "../appData/dt.db"
+      }
+    } ],
+    "conditions" : [ {
+      "name" : "TestPick",
+      "uri" : "condition.custom",
+      "tags" : [ ],
+      "settings" : {
+        "inReferences" : [ "{{System.Internal}}" ],
+        "expression" : "([\r\n\t{\r\n\t\t\"Total Power Consumption\": 111.90950535829926,\r\n\t\t\"Total Downtime\": 2736726.364487618,\r\n\t\t\"Avg Power Consumption\": 17.742266799483023,\r\n\t\t\"Avg 30d Downtime\": 675.7467312000399\r\n\t}\r\n])"
+      }
+    }, {
+      "name" : "sample",
+      "uri" : "condition.custom",
+      "tags" : [ ],
+      "settings" : {
+        "inReferences" : [ "{{System.Internal}}" ],
+        "expression" : "[\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1001\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-01-19T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 206.11,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1002\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-01-21T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 216.37,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1003\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-01-29T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 336.28,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1006\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-08T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 256.25,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1007\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-14T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 456.81,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1008\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-19T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 321.37,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1009\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-21T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 464.91,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1010\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-23T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 370.55,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1011\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-23T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 56.4,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1012\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-03-24T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 445.2,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1014\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-04-17T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 344.59,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1016\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-04-30T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 152.17,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1017\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-05-04T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 299.41,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1018\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-05-11T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 414.85,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1019\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-06-05T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 229.48,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1025\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-06-26T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 245.96,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1026\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-06-27T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 108.66,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1027\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-06-28T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 475.15,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1028\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-06-30T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 479.45,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1029\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-07-03T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 478.37,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1031\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-07-22T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 323.57,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1033\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-07-26T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 489.69,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1034\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-08-12T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 331.46,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1035\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-08-13T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 318.88,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1037\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-08-28T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 472.69,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1038\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-08-29T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 321.03,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1040\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-09-06T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 106.55,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1041\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-09-09T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 175.9,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1042\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-09-10T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 469.37,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1043\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-09-14T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 102.18,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1050\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-11-26T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 307.42,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1051\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-01T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 283.46,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1054\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-04T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 377.66,\r\n\t\t\t\t\"Destino\": \"Zona Oeste\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1056\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-24T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 105.92,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1057\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-25T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 57.66,\r\n\t\t\t\t\"Destino\": \"Planta Sur\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1059\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-28T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente B\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 175.78,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1060\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2024-12-30T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 201.7,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1061\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-01-03T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plata\",\r\n\t\t\t\t\"Peso_Toneladas\": 400.28,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1068\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-01-31T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente A\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 424.94,\r\n\t\t\t\t\"Destino\": \"Refinería Norte\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1069\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-01-31T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente C\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 271.22,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1070\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-02-17T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente D\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 295.26,\r\n\t\t\t\t\"Destino\": \"Puerto Este\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1075\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-22T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente20\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 77,\r\n\t\t\t\t\"Destino\": \"Puerto Callao\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1076\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-22T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente22\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Oro\",\r\n\t\t\t\t\"Peso_Toneladas\": 48,\r\n\t\t\t\t\"Destino\": \"Puerto Callao\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1079\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-23T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente5\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Plomo\",\r\n\t\t\t\t\"Peso_Toneladas\": 75,\r\n\t\t\t\t\"Destino\": \"Almacén Central\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1080\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-23T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente7\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Zinc\",\r\n\t\t\t\t\"Peso_Toneladas\": 19,\r\n\t\t\t\t\"Destino\": \"Puerto Callao\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1082\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-24T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente2\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 82,\r\n\t\t\t\t\"Destino\": \"Puerto Callao\",\r\n\t\t\t\t\"Site\": \"Site2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"Despacho_ID\": \"DM-1083\",\r\n\t\t\t\t\"Fecha_Despacho\": \"2025-05-24T00:00:00.000Z\",\r\n\t\t\t\t\"Cliente\": \"Cliente9\",\r\n\t\t\t\t\"Tipo_Mineral\": \"Cobre\",\r\n\t\t\t\t\"Peso_Toneladas\": 26,\r\n\t\t\t\t\"Destino\": \"Almacén\"\r\n\t\t\t}\r\n\t\t]"
+      }
+    } ],
+    "inputs" : [ {
+      "name" : "ClearTable",
+      "connection" : "SqliteOpenAiHistory",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "delete from ChatHistory;"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "CreateTable",
+      "connection" : "SqliteOpenAiHistory",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "create table if not exists ChatHistory (role text, content text)"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "DropTable",
+      "connection" : "SqliteOpenAiHistory",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "drop table ChatHistory"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "GetModel",
+      "connection" : "SqliteOpenAiHistory",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "select model from SetModel"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "read",
+      "connection" : "SqliteOpenAiHistory",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "select * from ChatHistory"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "insert",
+      "connection" : "crate",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/_sql",
+        "isFile" : false,
+        "body" : "{\"stmt\":\"insert into mytable (name) values ('123')\"}"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "read",
+      "connection" : "crate",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/_sql",
+        "isFile" : false,
+        "body" : "{\"stmt\":\"select * from {{this.tableName}}\"}"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "tableName",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "tableName",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "ReadParam",
+      "connection" : "cratejdbc",
+      "type" : "jdbc",
+      "qualifier" : {
+        "query" : "select * from {{this.tableName}}",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "tableName",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "tableName",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "create",
+      "connection" : "cratejdbc",
+      "type" : "jdbc",
+      "qualifier" : {
+        "query" : "CREATE TABLE mytable2 (\n  col1 TEXT,\n  col2 int\n);\n",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "test",
+      "connection" : "cratejdbc",
+      "type" : "jdbc",
+      "qualifier" : {
+        "query" : "select * from testtable1"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "chat",
+      "connection" : "ollamaRest",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/chat/completions",
+        "body" : "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"be a pirate.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"yo?\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"Yer talkin' to a scurvy dog, matey! What be bringin' ye to these fair waters? Need some treasure huntin' advice or just want to swab the decks?\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"what is everything I ever said?\"\n        }\n    ]\n}",
+        "isFile" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "chat_dynRef",
+      "connection" : "ollamaRest",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/chat/completions",
+        "body" : "{\n    \"model\": \"{{Connection.SqliteOpenAiHistory.GetModel[0].model}}\",\n    \"messages\": {{Connection.SqliteOpenAiHistory.read}}\n}",
+        "isFile" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "chat_param",
+      "connection" : "ollamaRest",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/chat/completions",
+        "body" : "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"be a pirate.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"yo?\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"Yer talkin' to a scurvy dog, matey! What be bringin' ye to these fair waters? Need some treasure huntin' advice or just want to swab the decks?\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"what is everything I ever said?\"\n        }\n    ]\n}",
+        "isFile" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "WellDowntimeDemo_West_Texas",
+      "connection" : "piremote",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Name: 'West Texas' Parent: ''",
+          "get" : "currentValue",
+          "index" : false,
+          "includeMetaData" : false,
+          "includeChildren" : false
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "WellDowntimeDemo_West_Texas_param",
+      "connection" : "piremote",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "get" : "currentValue",
+          "index" : false,
+          "includeMetaData" : false,
+          "includeChildren" : false,
+          "indexWindow" : "",
+          "query" : "{{this.p}}"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "p",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "p",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "test",
+      "connection" : "piremote",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "eventframe",
+        "options" : {
+          "get" : "currentValue",
+          "includeMetaData" : false,
+          "includeChildren" : true,
+          "database" : "ReactorsDemo",
+          "query" : "Template:\"Downtime\"",
+          "index" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "test",
+      "connection" : "s3",
+      "type" : "aws.s3",
+      "qualifier" : {
+        "type" : "read",
+        "encoding" : "Binary",
+        "includeMetadata" : true,
+        "key" : "test",
+        "bucketName" : "test"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "test",
+      "connection" : "sqlite",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "select * from \"test4\""
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    } ],
+    "outputs" : [ {
+      "name" : "test",
+      "connection" : "crate",
+      "type" : "rest.client",
+      "qualifier" : {
+        "method" : "POST",
+        "bodyType" : "defaultjson",
+        "breakupArrays" : false,
+        "endpointURL" : "/_sql",
+        "filterList" : [ "_timestamp", "_name", "_model" ]
+      }
+    }, {
+      "name" : "test",
+      "connection" : "cratejdbc",
+      "type" : "jdbc",
+      "qualifier" : {
+        "writeType" : "insert",
+        "createOption" : "off",
+        "tableCacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "breakupArrays" : false,
+        "table" : "mytablename",
+        "whereColumn" : "",
+        "logAsJSON" : false,
+        "filterList" : [ "_timestamp", "_model", "_name" ]
+      }
+    }, {
+      "name" : "test",
+      "connection" : "sqlite",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "writeType" : "insert",
+        "createOption" : "create",
+        "tableCacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "breakupArrays" : false,
+        "table" : "test4",
+        "whereColumn" : "",
+        "logAsJSON" : false
+      }
+    } ],
+    "modeling" : {
+      "models" : [ {
+        "name" : "CrateCreateTable",
+        "tags" : [ "WriteToCrate" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "col1",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "defaultValue" : 123,
+          "internalType" : "String"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "col2",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "defaultValue" : 123,
+          "internalType" : "Int64"
+        } ]
+      }, {
+        "name" : "OpenAiInput",
+        "tags" : [ "OpenAiChatHistory" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "content",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "role",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "OpenAiModel",
+        "tags" : [ ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "model",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "OpenAiPrompt",
+        "tags" : [ "OpenAiChatHistory" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "prompt",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "instruction",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "model",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "reset",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "TestCrate",
+        "tags" : [ "WriteToCrate" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "col1",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "defaultValue" : "123",
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "col2",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "defaultValue" : 123,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "dt",
+        "tags" : [ "SqliteDtTest" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "dt",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "test",
+        "tags" : [ "PipelineMechanics" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "att1",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "att2",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "att3",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      } ],
+      "instances" : [ {
+        "name" : "dt_Instance",
+        "tags" : [ "SqliteDtTest" ],
+        "model" : "dt",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "dt",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"{{System.Internal.DateTime}}\";"
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      }, {
+        "name" : "pi",
+        "tags" : [ ],
+        "model" : "test",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "att1",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "WellDowntimeDemo_West_Texas_param",
+              "params" : {
+                "p" : "Name: 'West Texas' Parent: ''"
+              },
+              "path" : "",
+              "connectionName" : "piremote"
+            }
+          }
+        }, {
+          "name" : "att2",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "WellDowntimeDemo_West_Texas",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "piremote"
+            }
+          }
+        }, {
+          "name" : "att3",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "WellDowntimeDemo_West_Texas",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "piremote"
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      }, {
+        "name" : "test",
+        "tags" : [ ],
+        "model" : "TestCrate",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "col1",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Condition",
+              "name" : "sample",
+              "params" : { },
+              "path" : "[0].Despacho_ID",
+              "source" : "System_Internal"
+            }
+          }
+        }, {
+          "name" : "col2",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "path" : ""
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      } ]
+    },
+    "pipelines" : [ {
+      "name" : "OpenAiHistory",
+      "tags" : [ "OpenAiChatHistory" ],
+      "inputStages" : [ "SetInputDefaults" ],
+      "stages" : [ {
+        "name" : "FilterOpenAiHistoryInput",
+        "display" : {
+          "position" : {
+            "x" : 345,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".AttributeFilterConfig",
+          "filterOption" : "exclude",
+          "filterList" : [ {
+            "filterType" : "exactPathFilter",
+            "filterText" : "prompt"
+          }, {
+            "filterType" : "exactPathFilter",
+            "filterText" : "instruction"
+          }, {
+            "filterType" : "exactPathFilter",
+            "filterText" : "model"
+          }, {
+            "filterType" : "exactPathFilter",
+            "filterText" : "reset"
+          } ],
+          "retainAsMetadata" : true,
+          "metadataKey" : "OpenAiHistoryInput"
+        },
+        "outputs" : [ "CheckModelExists" ]
+      }, {
+        "name" : "AddResponseToDb",
+        "display" : {
+          "position" : {
+            "x" : 4728,
+            "y" : 429
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.SqliteOpenAiHistory}}",
+          "qualifier" : {
+            "table" : "ChatHistory",
+            "writeType" : "insert",
+            "whereColumn" : "",
+            "logAsJSON" : false,
+            "createOption" : "off",
+            "tableCacheInterval" : {
+              "duration" : 1,
+              "units" : "Hours"
+            },
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model", "_timestamp" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ "SetFirstRunFlag" ]
+      }, {
+        "name" : "ModelPrompt",
+        "display" : {
+          "position" : {
+            "x" : 3864,
+            "y" : 11
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "OpenAiInput",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "content",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.OpenAiHistoryInput.prompt;"
+            }
+          }, {
+            "name" : "role",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return \"user\";"
+            }
+          } ]
+        },
+        "outputs" : [ "WritePromptToDb" ]
+      }, {
+        "name" : "CheckFirstRun",
+        "display" : {
+          "position" : {
+            "x" : 2812,
+            "y" : 11
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.value===1)",
+            "outputs" : [ "ModelInstructionPrompt" ],
+            "description" : "First Run"
+          }, {
+            "expression" : "return Boolean(event.value===0)",
+            "outputs" : [ "ModelPrompt" ],
+            "description" : "Not First Run"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "GetFirstRunFlag",
+        "display" : {
+          "position" : {
+            "x" : 2399,
+            "y" : 8
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "const firstRunFlag = state.pipeline.get('firstRun',1);\r\nstage.setValue(firstRunFlag);"
+        },
+        "outputs" : [ "CheckFirstRun" ]
+      }, {
+        "name" : "SetFirstRunFlag",
+        "display" : {
+          "position" : {
+            "x" : 5155,
+            "y" : 436
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "state.pipeline.set('firstRun',0);"
+        },
+        "outputs" : [ "Return" ]
+      }, {
+        "name" : "WriteSystemPrompToDb",
+        "display" : {
+          "position" : {
+            "x" : 3435,
+            "y" : -76
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.SqliteOpenAiHistory}}",
+          "qualifier" : {
+            "table" : "ChatHistory",
+            "writeType" : "insert",
+            "whereColumn" : "",
+            "logAsJSON" : false,
+            "createOption" : "create",
+            "tableCacheInterval" : {
+              "duration" : 1,
+              "units" : "Hours"
+            },
+            "breakupArrays" : false,
+            "filterList" : [ "_timestamp", "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "ModelPrompt" ]
+      }, {
+        "name" : "WritePromptToDb",
+        "display" : {
+          "position" : {
+            "x" : 4006,
+            "y" : 151
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.SqliteOpenAiHistory}}",
+          "qualifier" : {
+            "table" : "ChatHistory",
+            "writeType" : "insert",
+            "whereColumn" : "",
+            "logAsJSON" : false,
+            "createOption" : "off",
+            "tableCacheInterval" : {
+              "duration" : 1,
+              "units" : "Hours"
+            },
+            "breakupArrays" : false,
+            "filterList" : [ "_timestamp", "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "SendPromptToLlm" ]
+      }, {
+        "name" : "ModelInstructionPrompt",
+        "display" : {
+          "position" : {
+            "x" : 3026,
+            "y" : -374
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "OpenAiInput",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "content",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.OpenAiHistoryInput.instruction;"
+            }
+          }, {
+            "name" : "role",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return \"system\";"
+            }
+          } ]
+        },
+        "outputs" : [ "MergeRead" ]
+      }, {
+        "name" : "CheckReset",
+        "display" : {
+          "position" : {
+            "x" : 1607,
+            "y" : 11
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.metadata.OpenAiHistoryInput.reset===\"yes\")",
+            "outputs" : [ "ResetFirstRun" ],
+            "description" : "Reset"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "GetFirstRunFlag" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "ResetFirstRun",
+        "display" : {
+          "position" : {
+            "x" : 1997,
+            "y" : -147
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "state.pipeline.set(\"firstRun\",1);"
+        },
+        "outputs" : [ "GetFirstRunFlag" ]
+      }, {
+        "name" : "SendPromptToLlm",
+        "display" : {
+          "position" : {
+            "x" : 4164,
+            "y" : 284
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "chat_dynRef",
+            "params" : { },
+            "path" : "",
+            "connectionName" : "ollamaRest"
+          }
+        },
+        "outputs" : [ "ModelResponse" ]
+      }, {
+        "name" : "Return",
+        "display" : {
+          "position" : {
+            "x" : 5555,
+            "y" : 436
+          }
+        },
+        "config" : {
+          "type" : ".ReturnConfig"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "CheckModelExists",
+        "display" : {
+          "position" : {
+            "x" : 795,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.metadata.OpenAiHistoryInput.model)",
+            "outputs" : [ "Model" ],
+            "description" : "Value Is True"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "CheckReset" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "SetModel",
+        "display" : {
+          "position" : {
+            "x" : 1363,
+            "y" : -200
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.SqliteOpenAiHistory}}",
+          "qualifier" : {
+            "writeType" : "upsert",
+            "whereColumn" : "_id=1",
+            "logAsJSON" : false,
+            "createOption" : "create",
+            "tableCacheInterval" : {
+              "duration" : 1,
+              "units" : "Hours"
+            },
+            "breakupArrays" : false,
+            "table" : "SetModel",
+            "filterList" : [ "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "CheckReset" ]
+      }, {
+        "name" : "ModelResponse",
+        "display" : {
+          "position" : {
+            "x" : 4612,
+            "y" : 286
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "OpenAiInput",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "content",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value.choices[0].message.content;"
+            }
+          }, {
+            "name" : "role",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value.choices[0].message.role;"
+            }
+          } ]
+        },
+        "outputs" : [ "AddResponseToDb" ]
+      }, {
+        "name" : "SetInputDefaults",
+        "display" : {
+          "position" : {
+            "x" : -482,
+            "y" : 259
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "OpenAiPrompt",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "prompt",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value.prompt;"
+            }
+          }, {
+            "name" : "instruction",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "if (event.value.instruction===\"45245\"){\r\n    delete event.value.instruction;\r\n} else{\r\n    return event.value.instruction;\r\n};"
+            }
+          }, {
+            "name" : "model",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.value.model;"
+            }
+          }, {
+            "name" : "reset",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "const value = event.value.reset;\r\nif (value===\"45245\"){\r\n    delete event.value.reset;\r\n} else {\r\n    return value;\r\n};\r\n/*\r\nif (value !== 0 && value !== 1) {\r\n    throw new Error('reset must be 0 or 1 if provided');\r\n} else {\r\n    return value;\r\n};\r\n*/"
+            }
+          } ]
+        },
+        "outputs" : [ "CheckResetExists" ]
+      }, {
+        "name" : "CheckInstructionExists",
+        "display" : {
+          "position" : {
+            "x" : -16,
+            "y" : 418
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.value.instruction)",
+            "outputs" : [ "ValidateInstruction" ],
+            "description" : "Good Case"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "FilterOpenAiHistoryInput" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Error_1",
+        "display" : {
+          "position" : {
+            "x" : -465,
+            "y" : 731
+          }
+        },
+        "config" : {
+          "type" : ".ErrorConfig",
+          "errorMessage" : "Reset must be \"yes\" or \"no\" if provided"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "ValidateReset",
+        "display" : {
+          "position" : {
+            "x" : -475,
+            "y" : 561
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "const body = event.value;\r\nreturn Boolean(body.reset === \"yes\" || body.reset === \"no\")\r\n//(event.value === \"0\" && event.value === \"1\")",
+            "outputs" : [ "CheckInstructionExists" ],
+            "description" : "Good Case"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "Error_1" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Error_2",
+        "display" : {
+          "position" : {
+            "x" : 6,
+            "y" : 732
+          }
+        },
+        "config" : {
+          "type" : ".ErrorConfig",
+          "errorMessage" : "Reset must be \"yes\" if Instruction is provided."
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "CheckResetExists",
+        "display" : {
+          "position" : {
+            "x" : -478,
+            "y" : 409
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean('reset' in event.value)",
+            "outputs" : [ "ValidateReset" ],
+            "description" : "Good Case"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "CheckInstructionExists" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "ValidateInstruction",
+        "display" : {
+          "position" : {
+            "x" : -11,
+            "y" : 568
+          }
+        },
+        "config" : {
+          "type" : ".SwitchConfig",
+          "switchCases" : [ {
+            "expression" : "return Boolean(event.value.reset===\"yes\")",
+            "outputs" : [ "FilterOpenAiHistoryInput" ],
+            "description" : "Value Is True"
+          }, {
+            "expression" : "return true",
+            "outputs" : [ "Error_2" ],
+            "description" : "Default"
+          } ],
+          "evaluationType" : "onFirst"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "MergeRead",
+        "display" : {
+          "position" : {
+            "x" : 3273,
+            "y" : -267
+          }
+        },
+        "config" : {
+          "type" : ".MergeReadConfig",
+          "failureOutputs" : [ ],
+          "keyReferences" : [ {
+            "location" : "inline",
+            "key" : "Source1",
+            "reference" : {
+              "type" : "Input",
+              "name" : "CreateTable",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "SqliteOpenAiHistory"
+            }
+          } ],
+          "inputValueLocation" : "inline",
+          "inputValueKey" : "eventIn"
+        },
+        "outputs" : [ "MergeRead_1" ]
+      }, {
+        "name" : "MergeRead_1",
+        "display" : {
+          "position" : {
+            "x" : 3661,
+            "y" : -267
+          }
+        },
+        "config" : {
+          "type" : ".MergeReadConfig",
+          "failureOutputs" : [ ],
+          "keyReferences" : [ {
+            "location" : "inline",
+            "key" : "Source1",
+            "reference" : {
+              "type" : "Input",
+              "name" : "ClearTable",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "SqliteOpenAiHistory"
+            }
+          } ],
+          "inputValueLocation" : "inline",
+          "inputValueKey" : "eventIn"
+        },
+        "outputs" : [ "WriteSystemPrompToDb" ]
+      }, {
+        "name" : "Model",
+        "display" : {
+          "position" : {
+            "x" : 947,
+            "y" : -225
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "OpenAiModel",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "model",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : "return event.metadata.OpenAiHistoryInput.model;"
+            }
+          } ]
+        },
+        "outputs" : [ "SetModel" ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "ApiTrigger",
+        "display" : {
+          "position" : {
+            "x" : -555,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "inline",
+            "model" : {
+              "name" : "params",
+              "tags" : [ ],
+              "attributes" : [ {
+                "attributeType" : "Internal",
+                "name" : "prompt",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "String"
+              }, {
+                "attributeType" : "Internal",
+                "name" : "model",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "String"
+              }, {
+                "attributeType" : "Internal",
+                "name" : "instruction",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "defaultValue" : 45245,
+                "internalType" : "String"
+              }, {
+                "attributeType" : "Internal",
+                "name" : "reset",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "defaultValue" : 45245,
+                "internalType" : "String"
+              } ]
+            }
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "TestArgs",
+      "tags" : [ ],
+      "inputStages" : [ "Model", "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 206,
+            "y" : 12
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ "Return" ]
+      }, {
+        "name" : "Return",
+        "display" : {
+          "position" : {
+            "x" : 610,
+            "y" : 27
+          }
+        },
+        "config" : {
+          "type" : ".ReturnConfig"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Model",
+        "display" : {
+          "position" : {
+            "x" : 157,
+            "y" : 161
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "CrateCreateTable",
+          "objectName" : "",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "col1",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          }, {
+            "name" : "col2",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          } ]
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "APITrigger",
+        "display" : {
+          "position" : {
+            "x" : -420,
+            "y" : -24
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "inline",
+            "model" : {
+              "name" : "params",
+              "tags" : [ ],
+              "attributes" : [ {
+                "attributeType" : "Internal",
+                "name" : "arg1",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "Any"
+              }, {
+                "attributeType" : "Internal",
+                "name" : "arg2",
+                "nullable" : false,
+                "required" : false,
+                "array" : false,
+                "internalType" : "Any"
+              } ]
+            }
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "TestDtSqlite",
+      "tags" : [ ],
+      "inputStages" : [ ],
+      "stages" : [ ],
+      "trackActivity" : false,
+      "triggers" : [ ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "WriteToCrate",
+      "tags" : [ "WriteToCrate" ],
+      "inputStages" : [ "ModelCreateTablePayload" ],
+      "stages" : [ {
+        "name" : "WriteUsingRest",
+        "display" : {
+          "position" : {
+            "x" : 2490,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.crate}}",
+          "qualifier" : {
+            "endpointURL" : "/_sql",
+            "method" : "POST",
+            "bodyType" : "defaultjson",
+            "breakupArrays" : false,
+            "filterList" : [ "_timestamp", "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "ReadUsingRest" ]
+      }, {
+        "name" : "SplitJsonIntoKeysAndValues",
+        "display" : {
+          "position" : {
+            "x" : 2040,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "const obj = event.value;//{\"col1\":\"123\",\"col2\":123};\r\nconst tableName = event.name;\r\n\r\nconst columns = Object.keys(obj).join(',');\r\nconst values = Object.values(obj).map(v => \r\n  typeof v === 'string' ? `'${v}'` : v\r\n).join(',');\r\n\r\nconst stmt = `insert into ${tableName} (${columns}) values (${values})`;\r\n\r\nconst result = { stmt };\r\n\r\n// Output: { stmt: \"insert into mytable (col1,col2) values ('123',123)\" }\r\nstage.setValue(result);"
+        },
+        "outputs" : [ "WriteUsingRest" ]
+      }, {
+        "name" : "ModelRestPayload",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "TestCrate",
+          "objectName" : "{{event.metadata.tableName}}",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "col1",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          }, {
+            "name" : "col2",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          } ]
+        },
+        "outputs" : [ "SplitJsonIntoKeysAndValues" ]
+      }, {
+        "name" : "CreateTableUsingRest",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.crate}}",
+          "qualifier" : {
+            "endpointURL" : "/_sql",
+            "method" : "POST",
+            "bodyType" : "defaultjson",
+            "breakupArrays" : false,
+            "filterList" : [ "_timestamp", "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "ModelJdbcPayload", "ModelRestPayload" ]
+      }, {
+        "name" : "CreateTablePayload",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "const obj = event.value;//{\"col1\":\"123\",\"col2\":123};\r\nconst tableName = event.name;\r\n\r\nfunction inferSqlType(value) {\r\n  if (typeof value === 'string') return 'text';\r\n  if (typeof value === 'number' && Number.isInteger(value)) return 'int';\r\n  if (typeof value === 'number') return 'float';\r\n  // Add more type inference as needed\r\n  return 'text';\r\n}\r\n\r\nconst columns = Object.entries(obj)\r\n  .map(([key, value]) => `${key} ${inferSqlType(value)}`)\r\n  .join(', ');\r\n\r\nconst stmt = `create table if not exists ${tableName} (${columns})`;\r\n\r\nconst result = { stmt };\r\nconsole.log(result);\r\n// Output: { stmt: \"create table testtable1 (col1 text, col2 int)\" }\r\nstage.setValue(result);\r\nstage.setMetadata(\"tableName\",tableName);"
+        },
+        "outputs" : [ "CreateTableUsingRest" ]
+      }, {
+        "name" : "ModelCreateTablePayload",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "CrateCreateTable",
+          "objectName" : "mytablename",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "col1",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          }, {
+            "name" : "col2",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            }
+          } ]
+        },
+        "outputs" : [ "CreateTablePayload" ]
+      }, {
+        "name" : "ReadUsingRest",
+        "display" : {
+          "position" : {
+            "x" : 2940,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "read",
+            "params" : {
+              "tableName" : "{{event.metadata.tableName}}"
+            },
+            "path" : "",
+            "connectionName" : "crate"
+          }
+        },
+        "outputs" : [ "DoNothing" ]
+      }, {
+        "name" : "DoNothing",
+        "display" : {
+          "position" : {
+            "x" : 3390,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "WriteUsingJdbc",
+        "display" : {
+          "position" : {
+            "x" : 2040,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.cratejdbc}}",
+          "qualifier" : {
+            "writeType" : "insert",
+            "whereColumn" : "",
+            "logAsJSON" : false,
+            "createOption" : "off",
+            "tableCacheInterval" : {
+              "duration" : 1,
+              "units" : "Hours"
+            },
+            "breakupArrays" : false,
+            "table" : "{{event.metadata.tableName}}",
+            "filterList" : [ "_timestamp", "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "ReadUsingJdbc" ]
+      }, {
+        "name" : "ReadUsingJdbc",
+        "display" : {
+          "position" : {
+            "x" : 2490,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "ReadParam",
+            "params" : {
+              "tableName" : "{{event.metadata.tableName}}"
+            },
+            "path" : "",
+            "connectionName" : "cratejdbc"
+          }
+        },
+        "outputs" : [ "DoNothing2" ]
+      }, {
+        "name" : "ModelJdbcPayload",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".ModelConfig",
+          "model" : "TestCrate",
+          "objectName" : "{{event.metadata.tableName}}",
+          "initExpression" : "",
+          "attributes" : [ {
+            "name" : "col1",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            },
+            "defaultValue" : "jdbc"
+          }, {
+            "name" : "col2",
+            "expression" : {
+              "type" : "JavaScript",
+              "expression" : ""
+            },
+            "defaultValue" : 234
+          } ]
+        },
+        "outputs" : [ "WriteUsingJdbc" ]
+      }, {
+        "name" : "DoNothing2",
+        "display" : {
+          "position" : {
+            "x" : 2940,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    } ],
+    "tags" : [ {
+      "name" : "OpenAiChatHistory"
+    }, {
+      "name" : "SqliteDtTest"
+    }, {
+      "name" : "WriteToCrate"
+    } ],
+    "functions" : [ ],
+    "namespace" : [ ]
+  },
+  "network" : {
+    "version" : 0,
+    "groups" : [ ],
+    "hubs" : [ ]
+  },
+  "accessControl" : {
+    "apiKeys" : [ {
+      "friendlyName" : "qwe",
+      "expiration" : 1781049599000,
+      "version" : 1,
+      "algorithm" : "SHA-256",
+      "user" : "rest",
+      "hash" : "nrT7MpDb9zmPDPE9adiSgw0A73fKLiqoiCsmlHM8/7M="
+    } ],
+    "version" : 0,
+    "roles" : [ {
+      "name" : "admin",
+      "policyVersion" : 1,
+      "claims" : [ {
+        "resources" : [ "*" ],
+        "actions" : [ "*" ]
+      } ]
+    }, {
+      "name" : "default",
+      "policyVersion" : 1,
+      "claims" : [ {
+        "resources" : [ "*" ],
+        "actions" : [ "read" ]
+      }, {
+        "resources" : [ "connection", "instance", "pipeline" ],
+        "actions" : [ "*" ]
+      } ]
+    } ],
+    "users" : [ {
+      "name" : "administrator",
+      "credentials" : {
+        "salt" : "uhf7p1tXqm8Aa5ERREv0+g==",
+        "hashedPassword" : "wGi6fTTNM2i9amJ1WTjAB9ZRXAWZ0wGSbt02h2dO6t0VK6JkKNmF2CNgGLzo72dvPxPCRtsRMR0POnrx+XdUYw=="
+      },
+      "policyVersion" : 1,
+      "roles" : [ "admin" ],
+      "claims" : [ ]
+    }, {
+      "name" : "rest",
+      "credentials" : {
+        "salt" : "gF8ORD9RHR/MWWpXolAHWw==",
+        "hashedPassword" : "99yf0f5P7skRlmBZoOQw/s0bnHfEsySCcLj/1+bCG0NtagoxNluDwQhJGdsSZXsbMb0avyvjDykJeB40gfuo7Q=="
+      },
+      "policyVersion" : 1,
+      "roles" : [ "admin" ],
+      "claims" : [ ]
+    } ]
+  },
+  "system" : {
+    "version" : 0,
+    "variables" : [ ],
+    "secrets" : [ ],
+    "certificates" : [ ],
+    "settings" : {
+      "version" : 0,
+      "directories" : { },
+      "api" : {
+        "sessionTimeout" : {
+          "duration" : 8,
+          "units" : "Hours"
+        }
+      },
+      "configuration" : {
+        "scheme" : "http",
+        "schemeCertificate" : "ssl-certificate-private-key",
+        "port" : 45245,
+        "centralConfig" : false,
+        "autoSaveIntervalSeconds" : 60,
+        "backupCopies" : 50
+      },
+      "hbMqttBroker" : {
+        "enabled" : false,
+        "allowAnonymous" : true,
+        "endpoints" : [ {
+          "hostname" : "0.0.0.0",
+          "port" : 1885,
+          "useSSL" : false,
+          "certificateKeyAlias" : "",
+          "protocol" : "mqtt.tcp"
+        }, {
+          "hostname" : "0.0.0.0",
+          "port" : 1886,
+          "useSSL" : false,
+          "certificateKeyAlias" : "",
+          "protocol" : "mqtt.ws"
+        } ]
+      },
+      "restDataServer" : {
+        "enabled" : true,
+        "hostname" : "0.0.0.0",
+        "port" : 8885,
+        "useHttps" : false,
+        "schemeCertificate" : "",
+        "allowAnonymous" : false,
+        "authenticationModes" : [ "API_KEY" ],
+        "mcpServerEnabled" : false,
+        "mcpServerPort" : 45345
+      },
+      "log" : {
+        "debugLogging" : "NONE",
+        "fileSizeMB" : 100,
+        "logAuditEvents" : false
+      },
+      "redundancy" : {
+        "backup" : {
+          "enabled" : false,
+          "primary" : {
+            "uri" : "",
+            "pingIntervalSeconds" : 10,
+            "pingAttempts" : 1
+          }
+        }
+      },
+      "expressionEngine" : {
+        "allowExpressionEval" : false,
+        "allowEnvironmentVariables" : false,
+        "expressionEngineTimeoutSeconds" : 10,
+        "hubBindingName" : "hub",
+        "allowExpressionImports" : false
+      },
+      "backup" : {
+        "mode" : "manual",
+        "cronSchedule" : "0 3 * * *",
+        "repo" : {
+          "type" : "git",
+          "name" : "HubBackup",
+          "uri" : "https://github.com/taicho-hb/testRepo.git",
+          "author" : "HighByte IntelligenceHub",
+          "email" : "<>",
+          "auth" : {
+            "type" : "pass",
+            "username" : "taicho",
+            "password" : {
+              "type" : "Encrypted",
+              "value" : {
+                "keyId" : "fgIm1FzJwazHOtu2nVfTog==",
+                "iv" : "Jb7A5Tx0lSxgVszQnhVeCw==",
+                "ciphertext" : "8XSffZM3jmhY0TegL/4esWH/WZkkccTFRQVw78iTZ9p9HYlpkW5Wwov6LsaSdHM0"
+              }
+            }
+          }
+        },
+        "branch" : "main",
+        "deployFile" : "intelligencehub-deployment2.json"
+      }
+    }
+  }
+}
