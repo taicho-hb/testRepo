@@ -1023,14 +1023,7 @@
         },
         "database" : "postgres",
         "username" : "postgres",
-        "password" : {
-          "type" : "Encrypted",
-          "value" : {
-            "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
-            "iv" : "5O6s5Ha4YDxzhcUyZ02J2Q==",
-            "ciphertext" : "CSnWC68FoYx9D+iAdiOc5g=="
-          }
-        }
+        "connectString" : "password=password"
       }
     }, {
       "name" : "webh",
