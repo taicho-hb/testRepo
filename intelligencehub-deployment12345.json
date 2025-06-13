@@ -3490,7 +3490,7 @@
           "units" : "Hours"
         },
         "breakupArrays" : false,
-        "table" : "TestTableHyperTime",
+        "table" : "TestTableHyperTime1",
         "createHypertable" : true,
         "partitionType" : "timespan",
         "partitionInterval" : {
