@@ -3497,9 +3497,9 @@
           "units" : "Hours"
         },
         "breakupArrays" : false,
-        "table" : "TestTableHyper3",
+        "table" : "TestTableHyperInt",
         "createHypertable" : true,
-        "partitionType" : "timespan",
+        "partitionType" : "integer",
         "partitionInterval" : {
           "duration" : 1,
           "units" : "Minutes"
