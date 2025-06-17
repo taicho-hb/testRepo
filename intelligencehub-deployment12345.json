@@ -5441,7 +5441,7 @@
           "qualifierExpression" : "",
           "writeReturn" : "ignore"
         },
-        "outputs" : [ ]
+        "outputs" : [ "Return" ]
       }, {
         "name" : "ModelPrompt",
         "display" : {
@@ -5624,7 +5624,7 @@
           "qualifierExpression" : "",
           "writeReturn" : "completion"
         },
-        "outputs" : [ "SendPromptToLlm" ]
+        "outputs" : [ ]
       }, {
         "name" : "ModelSelectTable",
         "display" : {
@@ -5712,7 +5712,7 @@
             }
           } ]
         },
-        "outputs" : [ ]
+        "outputs" : [ "Return" ]
       } ],
       "trackActivity" : true,
       "triggers" : [ {
