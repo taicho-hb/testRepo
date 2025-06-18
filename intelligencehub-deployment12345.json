@@ -441,7 +441,7 @@
         },
         "outputs" : [ ]
       } ],
-      "trackActivity" : false,
+      "trackActivity" : true,
       "triggers" : [ {
         "name" : "FlowTrigger",
         "display" : {
