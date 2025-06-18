@@ -211,22 +211,29 @@
         "namespaceIndex" : 2,
         "identifierType" : "String",
         "identifier" : "Motor{{this.motorNum}}.PLC.Amps",
-        "type" : "Tag",
+        "type" : "Branch",
         "dataType" : "UInt32",
         "samplingInterval" : {
           "duration" : 0,
           "units" : "Seconds"
         },
-        "isComplex" : false
+        "isComplex" : true,
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
       },
       "cacheLifetime" : {
         "enabled" : false
       },
       "template" : {
-        "type" : "Off",
+        "type" : "Static",
         "params" : [ {
           "name" : "motorNum",
-          "pattern" : ""
+          "pattern" : "001-5"
         } ]
       },
       "parameters" : {
