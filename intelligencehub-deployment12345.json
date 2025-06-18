@@ -697,7 +697,26 @@
       "name" : "starter_solution"
     } ],
     "functions" : [ ],
-    "namespace" : [ ]
+    "namespace" : [ {
+      "id" : "622173a2-8cd9-47af-afbb-ecae8c2b6ec9",
+      "name" : "enterprise"
+    }, {
+      "id" : "fee30731-00d6-44d0-9bb0-776739993907",
+      "name" : "site",
+      "parentNamespaceId" : "622173a2-8cd9-47af-afbb-ecae8c2b6ec9"
+    }, {
+      "id" : "5dc9935b-443a-4d10-baf5-f26ed6901c7c",
+      "name" : "area",
+      "parentNamespaceId" : "fee30731-00d6-44d0-9bb0-776739993907"
+    }, {
+      "id" : "c5082626-4313-4dff-8d05-f7c962fed8d5",
+      "name" : "motor",
+      "parentNamespaceId" : "5dc9935b-443a-4d10-baf5-f26ed6901c7c",
+      "reference" : {
+        "type" : "Instance",
+        "name" : "motor001"
+      }
+    } ]
   },
   "network" : {
     "version" : 0,
