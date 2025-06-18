@@ -93,6 +93,33 @@
     } ],
     "conditions" : [ ],
     "inputs" : [ {
+      "name" : "BUILD1",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "BUILD1",
+        "dataType" : "Auto",
+        "type" : "Branch",
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
       "name" : "Motor001_PLC_Amps",
       "connection" : "opc",
       "type" : "opc.tcp",
