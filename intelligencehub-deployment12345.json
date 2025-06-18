@@ -120,6 +120,33 @@
         "type" : "EmptyParameters"
       }
     }, {
+      "name" : "Motor001_PLC",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor001.PLC",
+        "dataType" : "Auto",
+        "type" : "Branch",
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
       "name" : "Motor001_PLC_Amps",
       "connection" : "opc",
       "type" : "opc.tcp",
@@ -210,7 +237,7 @@
       "qualifier" : {
         "namespaceIndex" : 2,
         "identifierType" : "String",
-        "identifier" : "Motor{{this.motorNum}}.PLC.Amps",
+        "identifier" : "Motor{{this.motorNum}}.PLC",
         "type" : "Branch",
         "dataType" : "UInt32",
         "samplingInterval" : {
@@ -218,7 +245,7 @@
           "units" : "Seconds"
         },
         "isComplex" : true,
-        "maxDepth" : 1,
+        "maxDepth" : 0,
         "cacheInterval" : {
           "duration" : 1,
           "units" : "Hours"
