@@ -688,6 +688,21 @@
             "units" : "Seconds"
           }
         }
+      }, {
+        "name" : "ApiTrigger",
+        "display" : {
+          "position" : {
+            "x" : -460,
+            "y" : -147
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
       } ],
       "errorHandler" : {
         "type" : "default"
@@ -804,40 +819,12 @@
       "user" : "restUser",
       "hash" : "QaejnJKd+xwpsWgTK6sRC1LzIbp5IFrWH7lUyFfDtpA="
     }, {
-      "friendlyName" : "zxc",
-      "expiration" : 1781135999000,
-      "version" : 1,
-      "algorithm" : "SHA-256",
-      "user" : "restUser",
-      "hash" : "mjpkaE9VW1oMYqn3735TaiRUy5gI8C8LTQNM10qpVME="
-    }, {
       "friendlyName" : "qwe",
       "expiration" : 1781222399000,
       "version" : 1,
       "algorithm" : "SHA-256",
       "user" : "mcpUser",
       "hash" : "zkF6b5jf5QLYVq3dYxzv5aMPG9N7a7TXNg9qEiJ/vDo="
-    }, {
-      "friendlyName" : "wer",
-      "expiration" : 1781395199000,
-      "version" : 1,
-      "algorithm" : "SHA-256",
-      "user" : "restUser",
-      "hash" : "ARIqxjCQs+HvXV+woMWbFGa3C+j17yFmONOjBUtdnYU="
-    }, {
-      "friendlyName" : "sdf",
-      "expiration" : 1781740799000,
-      "version" : 1,
-      "algorithm" : "SHA-256",
-      "user" : "restUser",
-      "hash" : "RuEckIuztHrut9fqbocaZBtUg9EPrRBMvvR3LNVT6lo="
-    }, {
-      "friendlyName" : "ert",
-      "expiration" : 1781827199000,
-      "version" : 1,
-      "algorithm" : "SHA-256",
-      "user" : "restUser",
-      "hash" : "YcZcbJtyicLj7Zjy+Dp2WJP04B1Tbr2aA7MsvN7vgAY="
     } ],
     "version" : 0,
     "roles" : [ {
