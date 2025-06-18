@@ -303,10 +303,11 @@
           "expression" : {
             "type" : "Reference",
             "reference" : {
-              "type" : "Empty",
-              "name" : "",
+              "type" : "System",
+              "name" : "Variables",
               "params" : { },
-              "pick" : ""
+              "pick" : "",
+              "source" : "Site"
             }
           },
           "defaultValue" : "Portland"
