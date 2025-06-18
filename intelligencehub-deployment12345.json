@@ -572,7 +572,7 @@
           "failureOutputs" : [ ],
           "connectionReference" : "{{Connection.mqtt}}",
           "qualifier" : {
-            "topic" : "{{event.value.site}}/{{event.value.area}}/{{event.value.line}}/assets/motors/{{event.value.motorId}} ",
+            "topic" : "{{event.value.site}}/{{event.value.area}}/{{event.value.line}}/assets/motors/{{event.value.motorId}}/{{1}}",
             "qos" : 0,
             "namedRoot" : false,
             "retained" : false,
