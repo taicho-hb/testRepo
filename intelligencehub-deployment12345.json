@@ -225,6 +225,28 @@
       "parameters" : {
         "type" : "EmptyParameters"
       }
+    }, {
+      "name" : "get_motor001_service_info_param",
+      "connection" : "sql",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "type" : "query",
+        "query" : "SELECT * FROM [dbo].[lastservice] WHERE [dbo].[lastservice].[machineid] = 'motor001'",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
     } ],
     "outputs" : [ ],
     "modeling" : {
