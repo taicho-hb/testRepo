@@ -10,7 +10,7 @@
     "version" : 11,
     "connections" : [ {
       "name" : "Example_PI_To_Cloud_PI",
-      "uri" : "osisoft.afsdk://localhost:45290",
+      "uri" : "osisoft.afsdk://3.18.152.186:45290",
       "tags" : [ "Example_PI_To_Cloud" ],
       "writes" : {
         "flattenModeledValues" : false
@@ -31,14 +31,22 @@
           "type" : "credentials",
           "username" : "osisoft",
           "password" : {
-            "type" : "Reference",
-            "value" : "PI_User_Password"
+            "type" : "Encrypted",
+            "value" : {
+              "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
+              "iv" : "MN6859LInHwdkSW9SOEB8Q==",
+              "ciphertext" : "QfohO2H5SRqnqhWP4lp4pA=="
+            }
           }
         },
         "connectTimeoutSeconds" : 5,
         "password" : {
-          "type" : "Reference",
-          "value" : "PI_Agent_Token"
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
+            "iv" : "E318rP5RPcN7kPNmbndvDA==",
+            "ciphertext" : "kvLk9eb48Br6V+I/oKYtWH0HIgOmHwR+HoJK/tuAcWgSM6LX0jnDlkkxsxdUNTkV"
+          }
         }
       }
     }, {
