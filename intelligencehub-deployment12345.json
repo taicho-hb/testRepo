@@ -85,17 +85,10 @@
       "settings" : {
         "database" : "serviceinfo",
         "username" : "highbyte",
-        "password" : {
-          "type" : "Encrypted",
-          "value" : {
-            "keyId" : "ZQ5w+mXQibsUgKtsZ6FTRw==",
-            "iv" : "GeyJm9zB2qxWrhpCa0BZ2g==",
-            "ciphertext" : "W4K9SpMB/77fXpMWjLWSrA=="
-          }
-        },
         "strategy" : {
           "type" : "default"
-        }
+        },
+        "connectString" : "password=password"
       }
     } ],
     "conditions" : [ ],
@@ -459,7 +452,7 @@
         },
         "config" : {
           "type" : ".TriggerFlow",
-          "enabled" : false,
+          "enabled" : true,
           "flowEvaluation" : {
             "type" : "Polled",
             "interval" : {
