@@ -231,7 +231,7 @@
       "type" : "jdbc.sqlserver",
       "qualifier" : {
         "type" : "query",
-        "query" : "SELECT * FROM [dbo].[lastservice] WHERE [dbo].[lastservice].[machineid] = 'motor001'",
+        "query" : "SELECT * FROM [dbo].[lastservice] WHERE [dbo].[lastservice].[machineid] = '{{this.motorNum}}'",
         "index" : {
           "enabled" : false,
           "indexName" : "",
@@ -242,10 +242,27 @@
         "enabled" : false
       },
       "template" : {
-        "type" : "Off"
+        "type" : "Off",
+        "params" : [ {
+          "name" : "motorNum",
+          "pattern" : ""
+        } ]
       },
       "parameters" : {
-        "type" : "EmptyParameters"
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "motorNum",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "motor002",
+            "internalType" : "String"
+          } ]
+        }
       }
     } ],
     "outputs" : [ ],
