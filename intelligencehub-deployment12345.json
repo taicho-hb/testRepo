@@ -831,6 +831,13 @@
       "algorithm" : "SHA-256",
       "user" : "restUser",
       "hash" : "RuEckIuztHrut9fqbocaZBtUg9EPrRBMvvR3LNVT6lo="
+    }, {
+      "friendlyName" : "ert",
+      "expiration" : 1781827199000,
+      "version" : 1,
+      "algorithm" : "SHA-256",
+      "user" : "restUser",
+      "hash" : "YcZcbJtyicLj7Zjy+Dp2WJP04B1Tbr2aA7MsvN7vgAY="
     } ],
     "version" : 0,
     "roles" : [ {
