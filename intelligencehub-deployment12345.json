@@ -9,6 +9,39 @@
   "project" : {
     "version" : 11,
     "connections" : [ {
+      "name" : "Example_PI_To_Cloud_PI",
+      "uri" : "osisoft.afsdk://localhost:45290",
+      "tags" : [ "Example_PI_To_Cloud" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "requestTimeoutMS" : 90000,
+        "compression" : "GZIP",
+        "auth" : {
+          "type" : "credentials",
+          "username" : "osisoft",
+          "password" : {
+            "type" : "Reference",
+            "value" : "PI_User_Password"
+          }
+        },
+        "connectTimeoutSeconds" : 5,
+        "password" : {
+          "type" : "Reference",
+          "value" : "PI_Agent_Token"
+        }
+      }
+    }, {
       "name" : "mqtt",
       "uri" : "mqtt://0.0.0.0:1885",
       "tags" : [ "starter_solution" ],
@@ -93,6 +126,304 @@
     } ],
     "conditions" : [ ],
     "inputs" : [ {
+      "name" : "Example_PI_To_Cloud_PI_Input_Current_Values_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Template: 'Well'",
+          "get" : "currentValue",
+          "includeMetaData" : true,
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeChildren" : false,
+          "attributes" : [ "Tubing temperature", "Tubing pressure", "Status Message", "Production Rate", "Power Consumption", "Line Pressure", "Casing temperature", "Casing pressure", "Well Type" ]
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Event_Frames_Downtime",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "eventframe",
+        "options" : {
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeMetaData" : false,
+          "includeChildren" : false,
+          "get" : "currentValue",
+          "database" : "ReactorsDemo",
+          "query" : "Template: \"Downtime\" AND Start:>\"{{this.end_datetime}}\" AND End:<\"2030-01-01T00:00:00.0000000Z\"",
+          "index" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "end_datetime",
+          "pattern" : "\"2025-04-21T00:00:00.000Z\""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "end_datetime",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "{{this.end_datetime}}",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_All_PI_Point_Values_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "pointdatapipe",
+        "options" : {
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeMetaData" : false,
+          "includeChildren" : false,
+          "get" : "currentValue",
+          "query" : "OSIDEMO_Well*",
+          "useReference" : true,
+          "subscriptionId" : "Get_All_PI_Point_Values_Wells",
+          "reference" : "{{Connection.Example_PI_To_Cloud_PI.Example_PI_To_Cloud_PI_Input_Get_All_PI_Points_Wells}}"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_All_PI_Points_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "pointbrowse",
+        "options" : {
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeMetaData" : false,
+          "includeChildren" : false,
+          "get" : "currentValue",
+          "query" : "OSIDEMO_Well*",
+          "index" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_All_Values_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "assetdatapipe",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Template: 'Well'",
+          "get" : "currentValue",
+          "includeMetaData" : true,
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeChildren" : false,
+          "subscriptionId" : "Example_PI_To_Cloud_Get_All_Values_Wells_v8",
+          "index" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_Historial_Values_Event_Frames_Downtime",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeMetaData" : true,
+          "includeChildren" : false,
+          "get" : "rawValues",
+          "database" : "ReactorsDemo",
+          "query" : "ID: '{{this.elementID}}'",
+          "endTime" : "{{this.end}}",
+          "startTime" : "{{this.start}}",
+          "interval" : "5m",
+          "attributes" : [ "BearingTemperature", "SuctionPressure", "Status", "ReasonCode" ]
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "elementID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "{{this.elementID}}",
+            "internalType" : "String"
+          }, {
+            "attributeType" : "Internal",
+            "name" : "start",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "{{this.start}}",
+            "internalType" : "String"
+          }, {
+            "attributeType" : "Internal",
+            "name" : "end",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "{{this.end}}",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_Historical_Values_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "point",
+        "options" : {
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeMetaData" : true,
+          "includeChildren" : false,
+          "get" : "rawValues",
+          "useReference" : true,
+          "boundaryType" : "inside",
+          "startTime" : "-24h",
+          "endTime" : "*",
+          "index" : true,
+          "indexWindow" : "+30m",
+          "points" : [ "OSIDEMO_Well17.Bottom hole pressure.PV" ],
+          "reference" : "{{Condition.Example_PI_To_Cloud_Get_PI_Points_For_Assets.Connection_Example_PI_To_Cloud_PI_Example_PI_To_Cloud_PI_Input_Get_Metadata_Wells}}",
+          "query" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_PI_To_Cloud_PI_Input_Get_Metadata_Wells",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "assetmetadata",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Template:'Well'",
+          "get" : "currentValue",
+          "includeMetaData" : true,
+          "startIndex" : 0,
+          "maxCount" : -1,
+          "includeChildren" : false,
+          "includeAttributes" : true,
+          "index" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : true,
+        "interval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        }
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "WellDowntimeDemo_West_Texas_Clear_Fork_Well29",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Name: 'Well29' Parent: 'West Texas\\Clear Fork'",
+          "get" : "currentValue",
+          "index" : false,
+          "includeMetaData" : true,
+          "includeChildren" : false,
+          "indexWindow" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
       "name" : "BUILD1",
       "connection" : "opc",
       "type" : "opc.tcp",
