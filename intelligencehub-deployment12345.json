@@ -432,6 +432,30 @@
         "type" : "EmptyParameters"
       }
     }, {
+      "name" : "WellDowntimeDemo_West_Texas_Odessa_Well17",
+      "connection" : "Example_PI_To_Cloud_PI",
+      "type" : "osisoft.afsdk",
+      "qualifier" : {
+        "type" : "asset",
+        "options" : {
+          "database" : "WellDowntimeDemo",
+          "query" : "Name: 'Well17' Parent: 'West Texas\\Odessa'",
+          "get" : "currentValue",
+          "index" : false,
+          "includeMetaData" : false,
+          "includeChildren" : false
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
       "name" : "BUILD1",
       "connection" : "opc",
       "type" : "opc.tcp",
