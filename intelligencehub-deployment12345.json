@@ -204,6 +204,48 @@
         "type" : "EmptyParameters"
       }
     }, {
+      "name" : "MotorXXX_PLC_Metric",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor{{this.motorNum}}.PLC.Amps",
+        "type" : "Tag",
+        "dataType" : "UInt32",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        },
+        "isComplex" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "motorNum",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "motorNum",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "002",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
       "name" : "get_motor001_service_info",
       "connection" : "sql",
       "type" : "jdbc.sqlserver",
