@@ -260,7 +260,7 @@
         "type" : "Static",
         "params" : [ {
           "name" : "motorNum",
-          "pattern" : "001-5"
+          "pattern" : "001-4"
         } ]
       },
       "parameters" : {
@@ -587,8 +587,8 @@
         "name" : "Read",
         "display" : {
           "position" : {
-            "x" : 173,
-            "y" : -184
+            "x" : 169,
+            "y" : -186
           }
         },
         "config" : {
@@ -602,6 +602,41 @@
             },
             "pick" : "",
             "connectionName" : "opc"
+          }
+        },
+        "outputs" : [ "Breakup" ]
+      }, {
+        "name" : "Breakup",
+        "display" : {
+          "position" : {
+            "x" : 627,
+            "y" : -173
+          }
+        },
+        "config" : {
+          "type" : ".BreakupConfig",
+          "breakupType" : "array"
+        },
+        "outputs" : [ "Read_1" ]
+      }, {
+        "name" : "Read_1",
+        "display" : {
+          "position" : {
+            "x" : 1097,
+            "y" : -165
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "get_motor001_service_info_param",
+            "params" : {
+              "motorNum" : "{{event.value.ID}}"
+            },
+            "pick" : "",
+            "connectionName" : "sql"
           }
         },
         "outputs" : [ ]
@@ -641,8 +676,8 @@
         "name" : "PolledTrigger",
         "display" : {
           "position" : {
-            "x" : -418,
-            "y" : 174
+            "x" : -466,
+            "y" : 129
           }
         },
         "config" : {
