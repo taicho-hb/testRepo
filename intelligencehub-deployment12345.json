@@ -2605,7 +2605,7 @@
       },
       "backup" : {
         "enabled" : true,
-        "cronSchedule" : "* 1 * * *",
+        "cronSchedule" : "0 * * * *",
         "repo" : {
           "type" : "git",
           "name" : "HubBackup",
