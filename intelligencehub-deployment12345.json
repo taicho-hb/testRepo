@@ -2215,6 +2215,42 @@
         "type" : "default"
       }
     }, {
+      "name" : "TestObjectNew",
+      "tags" : [ ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 301,
+            "y" : -29
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "//let eventOut = {};\r\nlet eventOut = new Object()\r\nconsole.log(\"foobar\")\r\nstage.setValue(eventOut);"
+        },
+        "outputs" : [ "Transform_1" ]
+      }, {
+        "name" : "Transform_1",
+        "display" : {
+          "position" : {
+            "x" : 722,
+            "y" : 13
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
       "name" : "motor001_to_mqtt",
       "tags" : [ "starter_solution" ],
       "inputStages" : [ "Read" ],
