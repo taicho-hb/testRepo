@@ -2351,6 +2351,103 @@
       "errorHandler" : {
         "type" : "default"
       }
+    }, {
+      "name" : "testState",
+      "tags" : [ ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 229,
+            "y" : -7
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(state.pipeline.get(\"test\",123));"
+        },
+        "outputs" : [ "Return" ]
+      }, {
+        "name" : "Return",
+        "display" : {
+          "position" : {
+            "x" : 715,
+            "y" : 9
+          }
+        },
+        "config" : {
+          "type" : ".ReturnConfig"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "CallableTrigger",
+        "display" : {
+          "position" : {
+            "x" : -400,
+            "y" : -8
+          }
+        },
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "testState1",
+      "tags" : [ ],
+      "inputStages" : [ "Transform_1" ],
+      "stages" : [ {
+        "name" : "Subpipeline",
+        "display" : {
+          "position" : {
+            "x" : 233,
+            "y" : 5
+          }
+        },
+        "config" : {
+          "type" : ".SubPipelineConfig",
+          "failureOutputs" : [ ],
+          "reference" : "{{Pipeline.testState}}"
+        },
+        "outputs" : [ "Transform" ]
+      }, {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 656,
+            "y" : 5
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Transform_1",
+        "display" : {
+          "position" : {
+            "x" : 35,
+            "y" : -191
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "let pl = state.pipeline.get(\"test\",111)\r\nstage.setValue(pl);"
+        },
+        "outputs" : [ "Subpipeline" ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ ],
+      "errorHandler" : {
+        "type" : "default"
+      }
     } ],
     "tags" : [ {
       "name" : "Example_UNS"
