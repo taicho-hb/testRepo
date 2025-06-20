@@ -113,6 +113,29 @@
         "connectString" : "password=password"
       }
     }, {
+      "name" : "ibmmq",
+      "uri" : "mqtt://localhost:1893",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "connectionTimeoutSeconds" : 10,
+        "keepAliveSeconds" : 60,
+        "requestTimeoutMS" : 5000,
+        "maxInflight" : 1000,
+        "cleanSession" : true
+      }
+    }, {
       "name" : "mqtt",
       "uri" : "mqtt://0.0.0.0:1885",
       "tags" : [ "starter_solution" ],
