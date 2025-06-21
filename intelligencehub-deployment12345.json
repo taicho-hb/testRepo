@@ -217,6 +217,59 @@
         },
         "connectString" : "password=password"
       }
+    }, {
+      "name" : "ts",
+      "uri" : "jdbc.timescaledb://localhost:5433",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "strategy" : {
+          "type" : "default"
+        },
+        "database" : "postgres",
+        "username" : "postgres",
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
+            "iv" : "Ej+Ia7F+aHndBLBLt7Ma5A==",
+            "ciphertext" : "nvC2YDA5RjR7yU5tZWcVCg=="
+          }
+        }
+      }
+    }, {
+      "name" : "wh",
+      "uri" : "rest.client://wh",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "authentication" : {
+          "type" : "None"
+        },
+        "baseURL" : "https://webhook.site/7ebc1201-fcc8-4d12-b221-598a43e7a4fc"
+      }
     } ],
     "conditions" : [ {
       "name" : "Example_UNS_Condition_SAP_Result",
@@ -225,6 +278,14 @@
       "settings" : {
         "inReferences" : [ "{{Connection.Example_UNS_SAP_REST_Client.Example_UNS_SAP_Input_Get_Maintenance_Orders}}" ],
         "expression" : "var payload = {{this.currentValue}}.d;\r\npayload.results"
+      }
+    }, {
+      "name" : "test",
+      "uri" : "condition.custom",
+      "tags" : [ ],
+      "settings" : {
+        "inReferences" : [ "{{System.Internal}}" ],
+        "expression" : "{{this.currentValue}};"
       }
     } ],
     "inputs" : [ {
@@ -964,6 +1025,38 @@
         "topic" : "Enterprise/Site-1/Area-1/Line-1/Maintenance/{{this.Work_Center}}/{{this.Maintenance_Order}}",
         "retained" : false
       }
+    }, {
+      "name" : "test",
+      "connection" : "ts",
+      "type" : "jdbc.timescaledb",
+      "qualifier" : {
+        "writeType" : "insert",
+        "createOption" : "create_and_update",
+        "tableCacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "breakupArrays" : false,
+        "table" : "createHyperTableIntegerInstance1",
+        "createHypertable" : true,
+        "partitionType" : "integer",
+        "partitionInterval" : {
+          "duration" : 1,
+          "units" : "Minutes"
+        },
+        "partitionBy" : "node_timestamp",
+        "partitionNumber" : 1
+      }
+    }, {
+      "name" : "test",
+      "connection" : "wh",
+      "type" : "rest.client",
+      "qualifier" : {
+        "method" : "POST",
+        "bodyType" : "defaultjson",
+        "breakupArrays" : false,
+        "endpointURL" : "/"
+      }
     } ],
     "modeling" : {
       "models" : [ {
@@ -1219,6 +1312,31 @@
         }, {
           "attributeType" : "Internal",
           "name" : "lastServiceNotes",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "testDateType",
+        "tags" : [ ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "node_timestamp",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "DateTime"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "att1",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "att2",
           "nullable" : false,
           "required" : false,
           "array" : false,
@@ -1653,6 +1771,56 @@
               "connectionName" : "sql"
             }
           }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      }, {
+        "name" : "testDateType_Instance",
+        "tags" : [ ],
+        "model" : "testDateType",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "node_timestamp",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "pick" : ""
+            }
+          },
+          "defaultValue" : "2025-06-14T17:02:00.000Z"
+        }, {
+          "name" : "att1",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "pick" : ""
+            }
+          },
+          "defaultValue" : 123
+        }, {
+          "name" : "att2",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "pick" : ""
+            }
+          },
+          "defaultValue" : "123"
         } ],
         "parameters" : {
           "type" : "EmptyParameters"
