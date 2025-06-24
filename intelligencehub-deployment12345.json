@@ -150,6 +150,28 @@
         "database" : "OpenAiHistory.db"
       }
     }, {
+      "name" : "StageData",
+      "uri" : "jdbc.sqlite://StageData",
+      "tags" : [ ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "strategy" : {
+          "type" : "default"
+        },
+        "database" : "stage.db"
+      }
+    }, {
       "name" : "Tutorial_MQTT",
       "uri" : "mqtt://0.0.0.0:1885",
       "tags" : [ "Tutorial" ],
@@ -1046,7 +1068,7 @@
           "type" : "None",
           "options" : { }
         },
-        "baseURL" : "https://webhook.site/a791ae35-081c-475f-b5e8-f5f60f5b485e/"
+        "baseURL" : "https://webhook.site/347b706d-a8b6-4440-b9ac-68cf99ee98f7/"
       }
     }, {
       "name" : "wh",
@@ -1450,6 +1472,22 @@
       "type" : "jdbc.sqlite",
       "qualifier" : {
         "query" : "select * from user123"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "read",
+      "connection" : "StageData",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "query" : "select * from stage"
       },
       "cacheLifetime" : {
         "enabled" : false
@@ -2011,6 +2049,7 @@
             "nullable" : false,
             "required" : false,
             "array" : false,
+            "defaultValue" : "llama3.2",
             "internalType" : "String"
           } ]
         }
@@ -3197,6 +3236,44 @@
         }
       }
     }, {
+      "name" : "testDynRef",
+      "connection" : "webh",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "POST",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "body" : "{{this.test}}\n{{Connection.StageData.read}}",
+        "endpointURL" : "/",
+        "isFile" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "test",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "test",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
       "name" : "test",
       "connection" : "wh",
       "type" : "webhook.server",
@@ -3241,6 +3318,22 @@
           "name" : "Content-Type",
           "value" : "application/xml"
         } ]
+      }
+    }, {
+      "name" : "test",
+      "connection" : "StageData",
+      "type" : "jdbc.sqlite",
+      "qualifier" : {
+        "writeType" : "insert",
+        "createOption" : "create_and_update",
+        "tableCacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "breakupArrays" : false,
+        "table" : "stage",
+        "whereColumn" : "",
+        "logAsJSON" : false
       }
     }, {
       "name" : "test",
@@ -5520,7 +5613,7 @@
             "connectionName" : "ollamaRest"
           }
         },
-        "outputs" : [ "ModelResponse" ]
+        "outputs" : [ ]
       }, {
         "name" : "Return",
         "display" : {
@@ -5624,7 +5717,7 @@
           "qualifierExpression" : "",
           "writeReturn" : "completion"
         },
-        "outputs" : [ ]
+        "outputs" : [ "SendPromptToLlm" ]
       }, {
         "name" : "ModelSelectTable",
         "display" : {
@@ -7710,6 +7803,57 @@
           "enabled" : false
         }
       } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "TestReadDynRef",
+      "tags" : [ ],
+      "inputStages" : [ "Filter" ],
+      "stages" : [ {
+        "name" : "Read",
+        "display" : {
+          "position" : {
+            "x" : 596,
+            "y" : -20
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "testDynRef",
+            "params" : {
+              "test" : "{{event.metadata.filtered.type}}"
+            },
+            "pick" : "",
+            "connectionName" : "webh"
+          }
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Filter",
+        "display" : {
+          "position" : {
+            "x" : 173,
+            "y" : -44
+          }
+        },
+        "config" : {
+          "type" : ".AttributeFilterConfig",
+          "filterOption" : "include",
+          "filterList" : [ {
+            "filterType" : "exactPathFilter",
+            "filterText" : "test"
+          } ],
+          "retainAsMetadata" : true,
+          "metadataKey" : "filtered"
+        },
+        "outputs" : [ "Read" ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ ],
       "errorHandler" : {
         "type" : "default"
       }
