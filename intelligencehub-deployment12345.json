@@ -4331,6 +4331,54 @@
           "type" : "EmptyParameters"
         }
       }, {
+        "name" : "TestTimeOutInstance",
+        "tags" : [ ],
+        "model" : "test",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "att1",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "System",
+              "name" : "Pipelines",
+              "params" : { },
+              "pick" : "",
+              "source" : "TestTimeOut"
+            }
+          }
+        }, {
+          "name" : "att2",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "pick" : ""
+            }
+          }
+        }, {
+          "name" : "att3",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "pick" : ""
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      }, {
         "name" : "dt_Instance",
         "tags" : [ ],
         "model" : "dt",
@@ -7922,13 +7970,13 @@
           "type" : ".TransformConfig",
           "transformExpression" : "function sleep(ms) {\r\n  const start = Date.now();\r\n  while (Date.now() - start < ms) {\r\n    // Busy wait\r\n  }\r\n}\r\n\r\nsleep(9000); // Blocks for 2 seconds"
         },
-        "outputs" : [ "Transform_3" ]
+        "outputs" : [ "Return" ]
       }, {
         "name" : "Return",
         "display" : {
           "position" : {
-            "x" : 1664,
-            "y" : 442
+            "x" : 1709,
+            "y" : -98
           }
         },
         "config" : {
