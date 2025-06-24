@@ -9,6 +9,117 @@
   "project" : {
     "version" : 11,
     "connections" : [ {
+      "name" : "Example_UNS_MQTT",
+      "uri" : "mqtt://0.0.0.0:1885",
+      "tags" : [ "Example_UNS" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "connectionTimeoutSeconds" : 10,
+        "keepAliveSeconds" : 60,
+        "requestTimeoutMS" : 5000,
+        "cleanSession" : true,
+        "ssl" : false,
+        "redundantBrokers" : [ ],
+        "inputDiscovery" : ""
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA",
+      "uri" : "opc.tcp://52.10.6.4:49320",
+      "tags" : [ "Example_UNS" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : {
+        "subscriptionRate" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "security" : "None",
+        "authentication" : {
+          "type" : "Anonymous"
+        },
+        "connectTimeoutSeconds" : 5,
+        "requestTimeoutMS" : 5000,
+        "maxItemsPerRead" : 512,
+        "maxItemsPerWrite" : 256,
+        "sessionName" : ""
+      }
+    }, {
+      "name" : "Example_UNS_SAP_REST_Client",
+      "uri" : "rest.client://Connection_SAP_HANA_REST_Client_Connection_Demo",
+      "tags" : [ "Example_UNS" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : true,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "authentication" : {
+          "type" : "None",
+          "options" : { }
+        },
+        "baseURL" : "https://sandbox.api.sap.com:443"
+      }
+    }, {
+      "name" : "Example_UNS_SQL",
+      "uri" : "jdbc.sqlserver://52.10.6.4:1433",
+      "tags" : [ "Example_UNS" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "database" : "serviceinfo",
+        "username" : "highbyte",
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "Pd0g08wqAOrlvCQyMEHkBg==",
+            "iv" : "yKDKjYIjd81Qko/IZcofEQ==",
+            "ciphertext" : "18cASWdJeUcIlENDZq2MHw=="
+          }
+        },
+        "strategy" : {
+          "type" : "default"
+        }
+      }
+    }, {
       "name" : "IgnitionContainer",
       "uri" : "inductive.ignition://localhost:45291",
       "tags" : [ ],
@@ -1093,6 +1204,14 @@
       }
     } ],
     "conditions" : [ {
+      "name" : "Example_UNS_Condition_SAP_Result",
+      "uri" : "condition.custom",
+      "tags" : [ "Example_UNS" ],
+      "settings" : {
+        "inReferences" : [ "{{Connection.Example_UNS_SAP_REST_Client.Example_UNS_SAP_Input_Get_Maintenance_Orders}}" ],
+        "expression" : "var payload = {{this.currentValue}}.d;\r\npayload.results"
+      }
+    }, {
       "name" : "TestPick",
       "uri" : "condition.custom",
       "tags" : [ ],
@@ -1153,6 +1272,519 @@
       }
     } ],
     "inputs" : [ {
+      "name" : "Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "type" : "Collection",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        },
+        "ignoreBadQuality" : false,
+        "collection" : [ {
+          "identifierType" : "String",
+          "name" : "CNC_{{this.AssetID}}_AssetID",
+          "namespaceIndex" : "2",
+          "identifier" : "Tutorial.CNC_{{this.AssetID}}.AssetID"
+        }, {
+          "identifierType" : "String",
+          "name" : "CNC_{{this.AssetID}}_CuttingSpeed",
+          "namespaceIndex" : "2",
+          "identifier" : "Tutorial.CNC_{{this.AssetID}}.CuttingSpeed"
+        }, {
+          "identifierType" : "String",
+          "name" : "CNC_{{this.AssetID}}_MachineTemperature",
+          "namespaceIndex" : "2",
+          "identifier" : "Tutorial.CNC_{{this.AssetID}}.MachineTemperature"
+        }, {
+          "identifierType" : "String",
+          "name" : "CNC_{{this.AssetID}}_PowerCurrent",
+          "namespaceIndex" : "2",
+          "identifier" : "Tutorial.CNC_{{this.AssetID}}.PowerCurrent"
+        }, {
+          "identifierType" : "String",
+          "identifier" : "Tutorial.CNC_{{this.AssetID}}.FeedRate",
+          "name" : "CNC_{{this.AssetID}}_FeedRate",
+          "namespaceIndex" : "2"
+        } ]
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_1001_AssetID",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_Fanuc_1001.AssetID",
+        "type" : "Tag",
+        "dataType" : "String",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        },
+        "isComplex" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_Branch",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Fanuc",
+        "dataType" : "Auto",
+        "type" : "Branch",
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_MachineState_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_{{this.AssetID}}.MachineState",
+        "type" : "Tag",
+        "dataType" : "Int16",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Dynamic",
+        "reference" : "{{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs}}"
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "{{this.AssetID}}",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_PartProgamID_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_{{this.AssetID}}.PartProgamID",
+        "type" : "Tag",
+        "dataType" : "Int16",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_ProductionCount_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_{{this.AssetID}}.ProductionCount",
+        "type" : "Tag",
+        "dataType" : "Int16",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_RejectCount_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_{{this.AssetID}}.RejectCount",
+        "type" : "Tag",
+        "dataType" : "Int16",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_ToolID_Templated",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Tutorial.CNC_{{this.AssetID}}.ToolID",
+        "type" : "Tag",
+        "dataType" : "Int16",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_INJECT1_Branch",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "INJECT1",
+        "dataType" : "Auto",
+        "type" : "Branch",
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Input_Packaging_Branch",
+      "connection" : "Example_UNS_OPC_UA",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Packaging",
+        "dataType" : "Auto",
+        "type" : "Branch",
+        "maxDepth" : 1,
+        "cacheInterval" : {
+          "duration" : 1,
+          "units" : "Hours"
+        },
+        "ignoreBadQuality" : false,
+        "browseVariableNodes" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_SAP_Input_Get_Maintenance_Orders",
+      "connection" : "Example_UNS_SAP_REST_Client",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "application/json",
+        "method" : "GET",
+        "includeMetadata" : false,
+        "endpointURL" : "/s4hanacloud/sap/opu/odata/sap/API_MAINTENANCEORDER/MaintenanceOrder?$top=10&$inlinecount=allpages",
+        "header" : [ {
+          "name" : "APIKey",
+          "value" : "6P70W19kuYACqpo4USPAqYpaSGwR0t8y"
+        } ],
+        "isFile" : false,
+        "contentType" : "application/json"
+      },
+      "cacheLifetime" : {
+        "enabled" : true,
+        "interval" : {
+          "duration" : 36,
+          "units" : "Days"
+        }
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs",
+      "connection" : "Example_UNS_SQL",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "query" : "SELECT [dbo].[cmms_servicelogs].[asset_id] AS 'AssetID' FROM [dbo].[cmms_servicelogs] WHERE [dbo].[cmms_servicelogs].[asset_type] = 'CNC'",
+        "type" : "query",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_SQL_Input_Get_All_Service_Records",
+      "connection" : "Example_UNS_SQL",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "query" : "SELECT * FROM [dbo].[cmms_servicelogs]",
+        "type" : "query",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Example_UNS_SQL_Input_Get_All_Service_Records_All_CNCs_Templated",
+      "connection" : "Example_UNS_SQL",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "query" : "SELECT * FROM [dbo].[cmms_servicelogs] WHERE [dbo].[cmms_servicelogs].[asset_id] = '{{this.AssetID}}'",
+        "type" : "query",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "name" : "{{this.AssetID}}",
+        "type" : "Static",
+        "params" : [ {
+          "name" : "AssetID",
+          "pattern" : "Fanuc_1001"
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "AssetID",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "defaultValue" : "Fanuc_1001",
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
+      "name" : "Example_UNS_SQL_Input_Get_Dynamic_Input_CNC",
+      "connection" : "Example_UNS_SQL",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "query" : "SELECT * FROM [dbo].[cmms_servicelogs] where [dbo].[cmms_servicelogs].[asset_id] = '{{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_Fanuc_1001_AssetID}}'",
+        "type" : "query",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
       "name" : "Sample_Tags",
       "connection" : "IgnitionContainer",
       "type" : "inductive.ignition",
@@ -3291,6 +3923,40 @@
       }
     } ],
     "outputs" : [ {
+      "name" : "Example_UNS_MQTT_Output_CNC_Original",
+      "connection" : "Example_UNS_MQTT",
+      "type" : "mqtt",
+      "qualifier" : {
+        "qos" : 0,
+        "namedRoot" : false,
+        "breakupArrays" : true,
+        "topic" : "Enterprise/Site-1/Area-1/Line-1/Assets/{{this.ProcessData.AssetType}}/{{this.ProcessData.AssetID}}/Original_Payload",
+        "retained" : false
+      }
+    }, {
+      "name" : "Example_UNS_MQTT_Output_On_State_Change_Program",
+      "connection" : "Example_UNS_MQTT",
+      "type" : "mqtt",
+      "qualifier" : {
+        "qos" : 0,
+        "namedRoot" : false,
+        "breakupArrays" : true,
+        "topic" : "Enterprise/Site-1/Area-1/Line-1/On_State_Change/{{this.AssetID}}",
+        "retained" : false,
+        "filterList" : [ ]
+      }
+    }, {
+      "name" : "Example_UNS_MQTT_Output_SAP",
+      "connection" : "Example_UNS_MQTT",
+      "type" : "mqtt",
+      "qualifier" : {
+        "qos" : 0,
+        "namedRoot" : false,
+        "breakupArrays" : true,
+        "topic" : "Enterprise/Site-1/Area-1/Line-1/Maintenance/{{this.Work_Center}}/{{this.Maintenance_Order}}",
+        "retained" : false
+      }
+    }, {
       "name" : "test",
       "connection" : "MsiMessages",
       "type" : "jdbc.sqlite",
@@ -3625,6 +4291,190 @@
           "array" : false,
           "defaultValue" : 123,
           "internalType" : "Int64"
+        } ]
+      }, {
+        "name" : "Example_UNS_CNC_Machine_Process_Data",
+        "tags" : [ "Example_UNS" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "AssetID",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "String"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "AssetType",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Temperature",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Temperature_UOM",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "CuttingSpeed",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "PowerCurrent",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "FeedRate",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "LastServiceDate",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "LastServiceNotes",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "Example_UNS_CNC_Machine_Production_Data",
+        "tags" : [ "Example_UNS" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "AssetID",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "ProgramID",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "ToolID",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "MachineState",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "ProductionCount",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "RejectCount",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "Example_UNS_CNC_Machine_Simple",
+        "tags" : [ "Example_UNS" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "Enterprise",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Site",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Area",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Line",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "ProcessData",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      }, {
+        "name" : "Example_UNS_Maintenance_Order",
+        "tags" : [ "Example_UNS" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "Maintenance_Order",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Maintenance_Order_Description",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Work_Center",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "Equipment_Name",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
         } ]
       }, {
         "name" : "Injection",
@@ -4281,6 +5131,304 @@
         } ]
       } ],
       "instances" : [ {
+        "name" : "Example_UNS_CNC_Machine",
+        "tags" : [ "Example_UNS" ],
+        "model" : "Example_UNS_CNC_Machine_Simple",
+        "rootValueAs" : "Object",
+        "template" : {
+          "name" : "{{this.AssetID}}",
+          "type" : "Static",
+          "params" : [ {
+            "name" : "AssetID",
+            "pattern" : "Fanuc_1001"
+          } ]
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "Enterprise",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"Enterprise\""
+          }
+        }, {
+          "name" : "Site",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"Site-1\""
+          }
+        }, {
+          "name" : "Area",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"Area-1\""
+          }
+        }, {
+          "name" : "Line",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"Line-1\""
+          }
+        }, {
+          "name" : "ProcessData",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Instance",
+              "name" : "Example_UNS_Fanuc_Templated_Child",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : ""
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "inline",
+          "model" : {
+            "name" : "params",
+            "tags" : [ ],
+            "attributes" : [ {
+              "attributeType" : "Internal",
+              "name" : "AssetID",
+              "nullable" : false,
+              "required" : false,
+              "array" : false,
+              "defaultValue" : "Fanuc_1001",
+              "internalType" : "String"
+            } ]
+          }
+        }
+      }, {
+        "name" : "Example_UNS_CNC_Machine_Production_Data_Templated",
+        "tags" : [ "Example_UNS" ],
+        "model" : "Example_UNS_CNC_Machine_Production_Data",
+        "rootValueAs" : "Object",
+        "template" : {
+          "name" : "{{this.AssetID}}",
+          "type" : "Dynamic",
+          "reference" : "{{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs}}"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "AssetID",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"{{this.AssetID}}\""
+          }
+        }, {
+          "name" : "ProgramID",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_PartProgamID_Templated",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : "",
+              "connectionName" : "Example_UNS_OPC_UA"
+            }
+          }
+        }, {
+          "name" : "ToolID",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_ToolID_Templated",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : "",
+              "connectionName" : "Example_UNS_OPC_UA"
+            }
+          }
+        }, {
+          "name" : "MachineState",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_MachineState_Templated",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : "",
+              "connectionName" : "Example_UNS_OPC_UA"
+            }
+          }
+        }, {
+          "name" : "ProductionCount",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_ProductionCount_Templated",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : "",
+              "connectionName" : "Example_UNS_OPC_UA"
+            }
+          }
+        }, {
+          "name" : "RejectCount",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Example_UNS_OPC_UA_Input_Fanuc_CNC_RejectCount_Templated",
+              "params" : {
+                "AssetID" : "{{this.AssetID}}"
+              },
+              "pick" : "",
+              "connectionName" : "Example_UNS_OPC_UA"
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "inline",
+          "model" : {
+            "name" : "params",
+            "tags" : [ ],
+            "attributes" : [ {
+              "attributeType" : "Internal",
+              "name" : "AssetID",
+              "nullable" : false,
+              "required" : false,
+              "array" : false,
+              "defaultValue" : "{{this.AssetID}}",
+              "internalType" : "String"
+            } ]
+          }
+        }
+      }, {
+        "name" : "Example_UNS_Fanuc_Templated_Child",
+        "tags" : [ "Example_UNS" ],
+        "model" : "Example_UNS_CNC_Machine_Process_Data",
+        "rootValueAs" : "Object",
+        "template" : {
+          "name" : "{{this.AssetID}}",
+          "type" : "Static",
+          "params" : [ {
+            "name" : "AssetID",
+            "pattern" : "Fanuc_1001"
+          } ]
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "AssetID",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}.CNC_{{this.AssetID}}_AssetID"
+          }
+        }, {
+          "name" : "AssetType",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"CNC\""
+          }
+        }, {
+          "name" : "Temperature",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return ({{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}.CNC_{{this.AssetID}}_MachineTemperature-32)*.5556"
+          }
+        }, {
+          "name" : "Temperature_UOM",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return \"C\""
+          }
+        }, {
+          "name" : "CuttingSpeed",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}.CNC_{{this.AssetID}}_CuttingSpeed"
+          }
+        }, {
+          "name" : "PowerCurrent",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}.CNC_{{this.AssetID}}_PowerCurrent"
+          }
+        }, {
+          "name" : "FeedRate",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_All_Assets_Collection_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}.CNC_{{this.AssetID}}_FeedRate"
+          }
+        }, {
+          "name" : "LastServiceDate",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_Service_Records_All_CNCs_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}[0].date"
+          }
+        }, {
+          "name" : "LastServiceNotes",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_Service_Records_All_CNCs_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}[0].notes"
+          }
+        } ],
+        "parameters" : {
+          "type" : "inline",
+          "model" : {
+            "name" : "params",
+            "tags" : [ ],
+            "attributes" : [ {
+              "attributeType" : "Internal",
+              "name" : "AssetID",
+              "nullable" : false,
+              "required" : false,
+              "array" : false,
+              "defaultValue" : "Fanuc_1001",
+              "internalType" : "String"
+            } ]
+          }
+        }
+      }, {
+        "name" : "Example_UNS_Maintenance_Order",
+        "tags" : [ "Example_UNS" ],
+        "model" : "Example_UNS_Maintenance_Order",
+        "rootValueAs" : "Array",
+        "template" : {
+          "type" : "Off"
+        },
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "Maintenance_Order",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Condition.Example_UNS_Condition_SAP_Result.Connection_Example_UNS_SAP_REST_Client_Example_UNS_SAP_Input_Get_Maintenance_Orders}}[0].MaintenanceOrder"
+          }
+        }, {
+          "name" : "Maintenance_Order_Description",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Condition.Example_UNS_Condition_SAP_Result.Connection_Example_UNS_SAP_REST_Client_Example_UNS_SAP_Input_Get_Maintenance_Orders}}[0].MaintenanceOrderDesc"
+          }
+        }, {
+          "name" : "Work_Center",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Condition.Example_UNS_Condition_SAP_Result.Connection_Example_UNS_SAP_REST_Client_Example_UNS_SAP_Input_Get_Maintenance_Orders}}[0].MainWorkCenter"
+          }
+        }, {
+          "name" : "Equipment_Name",
+          "expression" : {
+            "type" : "JavaScript",
+            "expression" : "return {{Condition.Example_UNS_Condition_SAP_Result.Connection_Example_UNS_SAP_REST_Client_Example_UNS_SAP_Input_Get_Maintenance_Orders}}[0].EquipmentName"
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      }, {
         "name" : "Injection1",
         "tags" : [ ],
         "model" : "Injection",
@@ -5181,6 +6329,548 @@
       } ],
       "trackActivity" : false,
       "triggers" : [ ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "Example_UNS_Asset_Buffer",
+      "tags" : [ "Example_UNS" ],
+      "inputStages" : [ "Flatten" ],
+      "stages" : [ {
+        "name" : "Transform_Set_Metadata",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setMetadata(\"ProcessData_AssetID\",event.value.ProcessData_AssetID);\r\nstage.setMetadata(\"ProcessData_AssetType\",event.value.ProcessData_AssetType);\r\nstage.setMetadata(\"Enterprise\",event.value.Enterprise);\r\nstage.setMetadata(\"Site\",event.value.Site);\r\nstage.setMetadata(\"Area\",event.value.Area);\r\nstage.setMetadata(\"Line\",event.value.Line);"
+        },
+        "outputs" : [ "Time_Buffer_60_Seconds" ]
+      }, {
+        "name" : "Time_Buffer_60_Seconds",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TimedBufferConfig",
+          "windowExpression" : "stage.setBufferKey(event.value.ProcessData_AssetID);",
+          "windowInterval" : {
+            "duration" : 60,
+            "units" : "Seconds"
+          }
+        },
+        "outputs" : [ "Write_Buffered_Payload_To_MQTT" ]
+      }, {
+        "name" : "Write_Buffered_Payload_To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.Example_UNS_MQTT}}",
+          "qualifier" : {
+            "topic" : "{{event.metadata.Enterprise}}/{{event.metadata.Site}}/{{event.metadata.Area}}/{{event.metadata.Line}}/Assets/{{event.metadata.ProcessData_AssetType}}/{{event.metadata.bufferKey}}/Buffered_Payload",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : true,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model", "_timestamp" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Flatten",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".FlattenConfig",
+          "delimiter" : "_"
+        },
+        "outputs" : [ "Transform_Set_Metadata" ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "Flow_Trigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 10,
+              "units" : "Seconds"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.Example_UNS_CNC_Machine({\"AssetID\":\"{{this.AssetID}}\"})}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "name" : "{{this.AssetID}}",
+            "type" : "Dynamic",
+            "reference" : "{{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs}}"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      }, {
+        "name" : "CallableTrigger",
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "Example_UNS_Asset_Transforms",
+      "tags" : [ "Example_UNS" ],
+      "inputStages" : [ "WriteOriginal", "Flatten" ],
+      "stages" : [ {
+        "name" : "Flatten",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".FlattenConfig",
+          "delimiter" : "_"
+        },
+        "outputs" : [ "Transform" ]
+      }, {
+        "name" : "Write_Flattened_Payload_To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.Example_UNS_MQTT}}",
+          "qualifier" : {
+            "topic" : "Enterprise/Site-1/Area-1/Line-1/Assets/{{event.metadata.ProcessData_AssetType}}/{{event.metadata.ProcessData_AssetID}}/Flattened_Payload",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model", "_timestamp" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ "Breakup_Payload" ]
+      }, {
+        "name" : "Breakup_Payload",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".BreakupConfig",
+          "breakupType" : "all"
+        },
+        "outputs" : [ "Write_Broken_Up_Payload_To_MQTT" ]
+      }, {
+        "name" : "Write_Broken_Up_Payload_To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 2040,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.Example_UNS_MQTT}}",
+          "qualifier" : {
+            "topic" : "Enterprise/Site-1/Area-1/Line-1/Assets/{{event.metadata.ProcessData_AssetType}}/{{event.metadata.ProcessData_AssetID}}/Broken_Up_Payload/{{event.metadata.breakupName}}",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model", "_timestamp" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 67
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setMetadata(\"ProcessData_AssetID\",event.value.ProcessData_AssetID);\r\nstage.setMetadata(\"ProcessData_AssetType\",event.value.ProcessData_AssetType);"
+        },
+        "outputs" : [ "Write_Flattened_Payload_To_MQTT" ]
+      }, {
+        "name" : "WriteOriginal",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : -67
+          }
+        },
+        "config" : {
+          "type" : ".WriteConfig",
+          "failureOutputs" : [ ],
+          "references" : [ "{{Connection.Example_UNS_MQTT.Example_UNS_MQTT_Output_CNC_Original}}" ],
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "Flow_Trigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 10,
+              "units" : "Seconds"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.Example_UNS_CNC_Machine({\"AssetID\":\"{{this.AssetID}}\"})}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "name" : "{{this.AssetID}}",
+            "type" : "Dynamic",
+            "reference" : "{{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs}}"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      }, {
+        "name" : "CallableTrigger",
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "Example_UNS_CNC_Event_Based",
+      "tags" : [ "Example_UNS" ],
+      "inputStages" : [ "To_MQTT" ],
+      "stages" : [ {
+        "name" : "To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".WriteConfig",
+          "failureOutputs" : [ ],
+          "references" : [ "{{Connection.Example_UNS_MQTT.Example_UNS_MQTT_Output_On_State_Change_Program}}" ],
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "Flow_Trigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Exception",
+            "interval" : {
+              "duration" : 1,
+              "units" : "Seconds"
+            },
+            "mode" : "OnChange",
+            "expression" : "{{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_Fanuc_CNC_MachineState_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}",
+            "delay" : {
+              "duration" : 1,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.Example_UNS_CNC_Machine_Production_Data_Templated({\"AssetID\":\"{{this.AssetID}}\"})}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "name" : "{{this.AssetID}}",
+            "type" : "Dynamic",
+            "reference" : "{{Connection.Example_UNS_SQL.Example_UNS_SQL_Input_Get_All_CNC_Machines_AssetIDs}}"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      }, {
+        "name" : "CallableTrigger",
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "Example_UNS_Maintenance_Order",
+      "tags" : [ "Example_UNS" ],
+      "inputStages" : [ "To_MQTT" ],
+      "stages" : [ {
+        "name" : "To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".WriteConfig",
+          "failureOutputs" : [ ],
+          "references" : [ "{{Connection.Example_UNS_MQTT.Example_UNS_MQTT_Output_SAP}}" ],
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "Flow_Trigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 1,
+              "units" : "Minutes"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.Example_UNS_Maintenance_Order}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "type" : "Off"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      }, {
+        "name" : "CallableTrigger",
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "Example_UNS_OPC_UA_Breakup",
+      "tags" : [ "Example_UNS" ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ "Flatten" ]
+      }, {
+        "name" : "Breakup",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".BreakupConfig",
+          "breakupType" : "all"
+        },
+        "outputs" : [ "WriteNewTarget" ]
+      }, {
+        "name" : "WriteNewTarget",
+        "display" : {
+          "position" : {
+            "x" : 1590,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.Example_UNS_MQTT}}",
+          "qualifier" : {
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "topic" : "Enterprise/Site-1/Area-1/Line-1/OPC_UA_Edge/{{event.metadata.breakupName}}",
+            "breakupArrays" : false
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Flatten",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".FlattenConfig",
+          "delimiter" : "/"
+        },
+        "outputs" : [ "Breakup" ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "Flow_Trigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 1,
+              "units" : "Minutes"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_Fanuc_Branch}}", "{{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_INJECT1_Branch}}", "{{Connection.Example_UNS_OPC_UA.Example_UNS_OPC_UA_Input_Packaging_Branch}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "type" : "Off"
+          }
+        }
+      }, {
+        "name" : "ApiTrigger",
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      }, {
+        "name" : "CallableTrigger",
+        "config" : {
+          "type" : ".TriggerCallable",
+          "enabled" : true
+        }
+      } ],
       "errorHandler" : {
         "type" : "default"
       }
@@ -10892,6 +12582,8 @@
       }
     } ],
     "tags" : [ {
+      "name" : "Example_UNS"
+    }, {
       "name" : "OpenAiChatHistoryV1"
     }, {
       "name" : "PAS_X_MSI"
