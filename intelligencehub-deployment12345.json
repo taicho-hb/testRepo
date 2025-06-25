@@ -12609,7 +12609,7 @@
     }, {
       "name" : "testobjparam",
       "tags" : [ ],
-      "inputStages" : [ "Transform" ],
+      "inputStages" : [ "Transform_1", "Transform" ],
       "stages" : [ {
         "name" : "Transform",
         "display" : {
@@ -12622,7 +12622,7 @@
           "type" : ".TransformConfig",
           "transformExpression" : "event.value = {tag1:123,tag2:234}\r\nstage.setValue(event.value);"
         },
-        "outputs" : [ "MergeRead" ]
+        "outputs" : [ "Read", "MergeRead" ]
       }, {
         "name" : "MergeRead",
         "display" : {
@@ -12641,6 +12641,68 @@
           } ],
           "inputValueLocation" : "inline",
           "inputValueKey" : "eventIn"
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Read",
+        "display" : {
+          "position" : {
+            "x" : 650,
+            "y" : 201
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "testobj",
+            "params" : {
+              "tag1" : "123",
+              "tag2" : "{{event.value}}"
+            },
+            "pick" : "",
+            "connectionName" : "webh"
+          }
+        },
+        "outputs" : [ ]
+      }, {
+        "name" : "Transform_1",
+        "display" : {
+          "position" : {
+            "x" : 246,
+            "y" : 337
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "let ts = \"2025-01-01T1:01:11\";\r\nstage.setValue(ts);\r\n\r\nts = \"2025-01-01T1:01:11Z\";\r\nstage.setValue(ts);\r\n\r\nts = \"2025-01-01T01:01:11\";\r\nstage.setValue(ts);\r\n\r\nts = \"2025-01-01T01:01:11Z\";\r\nstage.setValue(ts);"
+        },
+        "outputs" : [ "Transform_2" ]
+      }, {
+        "name" : "Transform_2",
+        "display" : {
+          "position" : {
+            "x" : 673,
+            "y" : 378
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "let ts = new Date(event.value);\r\nstage.setValue(ts);"
+        },
+        "outputs" : [ "Transform_3" ]
+      }, {
+        "name" : "Transform_3",
+        "display" : {
+          "position" : {
+            "x" : 1116,
+            "y" : 391
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
         },
         "outputs" : [ ]
       } ],
