@@ -3920,6 +3920,54 @@
         }
       }
     }, {
+      "name" : "testobj",
+      "connection" : "webh",
+      "type" : "rest.client",
+      "qualifier" : {
+        "acceptType" : "*/*",
+        "method" : "GET",
+        "contentType" : "application/json",
+        "includeMetadata" : false,
+        "endpointURL" : "/",
+        "body" : "{{this.tag1}}\n{{this.tag2}}",
+        "isFile" : false
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off",
+        "params" : [ {
+          "name" : "tag1",
+          "pattern" : ""
+        }, {
+          "name" : "tag2",
+          "pattern" : ""
+        } ]
+      },
+      "parameters" : {
+        "type" : "inline",
+        "model" : {
+          "name" : "params",
+          "tags" : [ ],
+          "attributes" : [ {
+            "attributeType" : "Internal",
+            "name" : "tag1",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          }, {
+            "attributeType" : "Internal",
+            "name" : "tag2",
+            "nullable" : false,
+            "required" : false,
+            "array" : false,
+            "internalType" : "String"
+          } ]
+        }
+      }
+    }, {
       "name" : "test",
       "connection" : "wh",
       "type" : "webhook.server",
@@ -12555,6 +12603,49 @@
           }
         }
       } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "testobjparam",
+      "tags" : [ ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 236,
+            "y" : 24
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "event.value = {tag1:123,tag2:234}\r\nstage.setValue(event.value);"
+        },
+        "outputs" : [ "MergeRead" ]
+      }, {
+        "name" : "MergeRead",
+        "display" : {
+          "position" : {
+            "x" : 644,
+            "y" : 34
+          }
+        },
+        "config" : {
+          "type" : ".ReadSourcesConfig",
+          "failureOutputs" : [ ],
+          "keyReferences" : [ {
+            "location" : "child",
+            "key" : "Source1",
+            "reference" : "{{Connection.webh.testobj({{event.value}})}}"
+          } ],
+          "inputValueLocation" : "inline",
+          "inputValueKey" : "eventIn"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ ],
       "errorHandler" : {
         "type" : "default"
       }
