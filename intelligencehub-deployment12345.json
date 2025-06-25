@@ -1156,7 +1156,14 @@
         },
         "database" : "postgres",
         "username" : "postgres",
-        "connectString" : "password=password"
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
+            "iv" : "ib1VUJIFgt1nxr8mxQJRWQ==",
+            "ciphertext" : "cov15KY3S+ZvT/ajFZs8bg=="
+          }
+        }
       }
     }, {
       "name" : "webh",
@@ -1267,7 +1274,7 @@
       "uri" : "condition.custom",
       "tags" : [ ],
       "settings" : {
-        "inReferences" : [ "{{Connection.opc.Motor001_PLC_param}}" ],
+        "inReferences" : [ "{{System.Internal}}" ],
         "expression" : "{{this.currentValue}}"
       }
     } ],
@@ -4249,7 +4256,7 @@
           "units" : "Hours"
         },
         "breakupArrays" : false,
-        "table" : "TestTableHyperTime1",
+        "table" : "TestTableHyperTimets2",
         "createHypertable" : true,
         "partitionType" : "timespan",
         "partitionInterval" : {
@@ -4257,7 +4264,7 @@
           "units" : "Minutes"
         },
         "partitionNumber" : 1,
-        "partitionBy" : "col1",
+        "partitionBy" : "time",
         "filterList" : [ ]
       }
     }, {
