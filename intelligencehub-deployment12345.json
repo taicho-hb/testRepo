@@ -1066,7 +1066,14 @@
         "strategy" : {
           "type" : "default"
         },
-        "connectString" : "password=password"
+        "password" : {
+          "type" : "Encrypted",
+          "value" : {
+            "keyId" : "vrBpcHOKKwwsQER6zmCP9g==",
+            "iv" : "nhpEs0S2W5Lgpe5gPzoPdQ==",
+            "ciphertext" : "MZEo/Ni0i7pR6VSnpprmWA=="
+          }
+        }
       }
     }, {
       "name" : "sqlite",
