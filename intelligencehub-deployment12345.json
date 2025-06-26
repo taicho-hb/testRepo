@@ -10334,6 +10334,78 @@
         "type" : "default"
       }
     }, {
+      "name" : "checkIn",
+      "tags" : [ ],
+      "inputStages" : [ "Transform" ],
+      "stages" : [ {
+        "name" : "Transform",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TransformConfig",
+          "transformExpression" : "stage.setValue(event.value);"
+        },
+        "outputs" : [ "Read" ]
+      }, {
+        "name" : "Read",
+        "display" : {
+          "position" : {
+            "x" : 690,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".ReadConfig",
+          "failureOutputs" : [ ],
+          "reference" : {
+            "type" : "Input",
+            "name" : "test",
+            "params" : {
+              "p" : "{{event.value.test}}"
+            },
+            "pick" : "",
+            "connectionName" : "webh"
+          }
+        },
+        "outputs" : [ "Return" ]
+      }, {
+        "name" : "Return",
+        "display" : {
+          "position" : {
+            "x" : 1140,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".ReturnConfig"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "ApiTrigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
       "name" : "conditionread",
       "tags" : [ ],
       "inputStages" : [ "MergeRead", "OnChange" ],
@@ -12936,6 +13008,13 @@
       "algorithm" : "SHA-256",
       "user" : "restUser",
       "hash" : "0Flo6Cge4ZtMv6gtuqVg0HoPysTwkH9Fc3YVOzk09t8="
+    }, {
+      "friendlyName" : "cvb",
+      "expiration" : 1782518399000,
+      "version" : 1,
+      "algorithm" : "SHA-256",
+      "user" : "restUser",
+      "hash" : "YvGAr+vV3vqssvac+77HTtN7noHlYsWmXKsKbXfQ390="
     } ],
     "version" : 0,
     "roles" : [ {
