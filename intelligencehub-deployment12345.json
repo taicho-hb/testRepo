@@ -3283,10 +3283,13 @@
         "options" : {
           "database" : "WellDowntimeDemo",
           "query" : "Name: 'West Texas' Parent: ''",
-          "get" : "currentValue",
+          "get" : "rawValues",
           "index" : false,
           "includeMetaData" : false,
-          "includeChildren" : false
+          "includeChildren" : false,
+          "indexWindow" : "",
+          "startTime" : "*-1m",
+          "endTime" : "*"
         }
       },
       "cacheLifetime" : {
