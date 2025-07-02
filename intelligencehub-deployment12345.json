@@ -6506,7 +6506,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -6515,7 +6515,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -6665,7 +6665,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -6674,7 +6674,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -6737,7 +6737,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -6746,7 +6746,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -6807,7 +6807,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -6816,7 +6816,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -6924,7 +6924,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -6933,7 +6933,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -7252,7 +7252,7 @@
         },
         "config" : {
           "type" : ".TriggerPolled",
-          "enabled" : true,
+          "enabled" : false,
           "interval" : {
             "duration" : 10,
             "units" : "Seconds"
@@ -7262,7 +7262,7 @@
         "name" : "ApiTrigger",
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -7271,7 +7271,7 @@
         "name" : "CallableTrigger",
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -7621,7 +7621,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -7733,7 +7733,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -8502,7 +8502,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -8728,7 +8728,7 @@
         },
         "config" : {
           "type" : ".TriggerFlow",
-          "enabled" : true,
+          "enabled" : false,
           "flowEvaluation" : {
             "type" : "Exception",
             "interval" : {
@@ -9828,7 +9828,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -10399,7 +10399,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -10489,7 +10489,7 @@
         },
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -10524,7 +10524,7 @@
         },
         "config" : {
           "type" : ".TriggerEvent",
-          "enabled" : true,
+          "enabled" : false,
           "reference" : "{{Connection.opc.MotorXXX_PLC}}"
         }
       }, {
@@ -10594,7 +10594,7 @@
         },
         "config" : {
           "type" : ".TriggerEvent",
-          "enabled" : true,
+          "enabled" : false,
           "reference" : "{{Connection.opc.BUILD1}}"
         }
       } ],
@@ -10983,7 +10983,7 @@
         },
         "config" : {
           "type" : ".TriggerPolled",
-          "enabled" : true,
+          "enabled" : false,
           "interval" : {
             "duration" : 1,
             "units" : "Seconds"
@@ -10999,7 +10999,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "EmptyParameters"
           }
@@ -11612,7 +11612,7 @@
         },
         "config" : {
           "type" : ".TriggerPolled",
-          "enabled" : true,
+          "enabled" : false,
           "interval" : {
             "duration" : 1,
             "units" : "Seconds"
@@ -11949,7 +11949,7 @@
         },
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -12125,7 +12125,7 @@
         },
         "config" : {
           "type" : ".TriggerCallable",
-          "enabled" : true
+          "enabled" : false
         }
       } ],
       "errorHandler" : {
@@ -12269,7 +12269,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -12341,7 +12341,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -12422,7 +12422,7 @@
         },
         "config" : {
           "type" : ".TriggerPolled",
-          "enabled" : true,
+          "enabled" : false,
           "interval" : {
             "duration" : 1,
             "units" : "Seconds"
@@ -12652,7 +12652,7 @@
         },
         "config" : {
           "type" : ".TriggerApi",
-          "enabled" : true,
+          "enabled" : false,
           "parameters" : {
             "type" : "inline",
             "model" : {
@@ -13107,13 +13107,13 @@
       "configuration" : {
         "scheme" : "http",
         "schemeCertificate" : "ssl-certificate-private-key",
-        "port" : 45245,
+        "port" : 42245,
         "centralConfig" : true,
         "autoSaveIntervalSeconds" : 60,
         "backupCopies" : 50
       },
       "hbMqttBroker" : {
-        "enabled" : true,
+        "enabled" : false,
         "allowAnonymous" : true,
         "endpoints" : [ {
           "hostname" : "0.0.0.0",
@@ -13130,7 +13130,7 @@
         } ]
       },
       "restDataServer" : {
-        "enabled" : true,
+        "enabled" : false,
         "hostname" : "0.0.0.0",
         "port" : 8885,
         "useHttps" : false,
