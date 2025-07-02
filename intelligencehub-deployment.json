@@ -3,15 +3,15 @@
     "company" : "HighByte",
     "product" : "IntelligenceHub",
     "version" : "4.2.0",
-    "build" : "2025.6.13.294",
-    "stage" : "Alpha"
+    "build" : "2025.6.27.332",
+    "stage" : "Release"
   },
   "project" : {
     "version" : 11,
     "connections" : [ {
-      "name" : "ts",
-      "uri" : "jdbc.timescaledb://host.docker.internal:5433",
-      "tags" : [ ],
+      "name" : "mqtt",
+      "uri" : "mqtt://0.0.0.0:1885",
+      "tags" : [ "starter_solution" ],
       "writes" : {
         "flattenModeledValues" : false
       },
@@ -25,28 +25,169 @@
         }
       },
       "settings" : {
+        "connectionTimeoutSeconds" : 10,
+        "keepAliveSeconds" : 60,
+        "requestTimeoutMS" : 5000,
+        "cleanSession" : true,
+        "clientId" : "mqtt",
+        "ssl" : false,
+        "redundantBrokers" : [ ],
+        "inputDiscovery" : ""
+      }
+    }, {
+      "name" : "opc",
+      "uri" : "opc.tcp://52.10.6.4:49320",
+      "tags" : [ "starter_solution" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : {
+        "subscriptionRate" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "security" : "None",
+        "authentication" : {
+          "type" : "Anonymous"
+        },
+        "connectTimeoutSeconds" : 5,
+        "requestTimeoutMS" : 5000,
+        "maxItemsPerRead" : 512,
+        "maxItemsPerWrite" : 256,
+        "sessionName" : ""
+      }
+    }, {
+      "name" : "sql",
+      "uri" : "jdbc.sqlserver://52.10.6.4:1433",
+      "tags" : [ "starter_solution" ],
+      "writes" : {
+        "flattenModeledValues" : false
+      },
+      "subscriptions" : { },
+      "storeForward" : {
+        "enabled" : false,
+        "maxEntries" : 100,
+        "waitOnFailureInterval" : {
+          "duration" : 1,
+          "units" : "Seconds"
+        }
+      },
+      "settings" : {
+        "database" : "serviceinfo",
+        "username" : "highbyte",
         "strategy" : {
           "type" : "default"
         },
-        "database" : "postgres",
-        "username" : "postgres",
-        "password" : {
-          "type" : "Encrypted",
-          "value" : {
-            "keyId" : "RbXxSWynQtxdLvstv2bhjw==",
-            "iv" : "lR2F8Uq+Xr/xtNsO2ujvTg==",
-            "ciphertext" : "J4tIZCdobfOfYkK6oJrJzQ=="
-          }
-        }
+        "connectString" : "password=password"
       }
     } ],
     "conditions" : [ ],
     "inputs" : [ {
-      "name" : "test",
-      "connection" : "ts",
-      "type" : "jdbc.timescaledb",
+      "name" : "Motor001_PLC_Amps",
+      "connection" : "opc",
+      "type" : "opc.tcp",
       "qualifier" : {
-        "query" : "select * from \"public\".\"TestHyperTableTime294PkUs2\""
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor001.PLC.Amps",
+        "type" : "Tag",
+        "dataType" : "UInt32",
+        "samplingInterval" : {
+          "duration" : 0,
+          "units" : "Seconds"
+        }
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Motor001_PLC_Error",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor001.PLC.Error",
+        "type" : "Tag",
+        "dataType" : "String"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Motor001_PLC_Speed",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor001.PLC.Speed",
+        "type" : "Tag",
+        "dataType" : "UInt32"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "Motor001_PLC_Vibration",
+      "connection" : "opc",
+      "type" : "opc.tcp",
+      "qualifier" : {
+        "namespaceIndex" : 2,
+        "identifierType" : "String",
+        "identifier" : "Motor001.PLC.Vibration",
+        "type" : "Tag",
+        "dataType" : "Real64"
+      },
+      "cacheLifetime" : {
+        "enabled" : false
+      },
+      "template" : {
+        "type" : "Off"
+      },
+      "parameters" : {
+        "type" : "EmptyParameters"
+      }
+    }, {
+      "name" : "get_motor001_service_info",
+      "connection" : "sql",
+      "type" : "jdbc.sqlserver",
+      "qualifier" : {
+        "type" : "query",
+        "query" : "SELECT * FROM [dbo].[lastservice] WHERE [dbo].[lastservice].[machineid] = 'motor001'",
+        "index" : {
+          "enabled" : false,
+          "indexName" : "",
+          "indexValue" : ""
+        }
       },
       "cacheLifetime" : {
         "enabled" : false
@@ -58,45 +199,408 @@
         "type" : "EmptyParameters"
       }
     } ],
-    "outputs" : [ {
-      "name" : "TestHyperTableTime294",
-      "connection" : "ts",
-      "type" : "jdbc.timescaledb",
-      "qualifier" : {
-        "writeType" : "insert",
-        "createOption" : "create_and_update",
-        "tableCacheInterval" : {
-          "duration" : 1,
-          "units" : "Hours"
+    "outputs" : [ ],
+    "modeling" : {
+      "models" : [ {
+        "name" : "motors",
+        "tags" : [ "starter_solution" ],
+        "attributes" : [ {
+          "attributeType" : "Internal",
+          "name" : "motorId",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "site",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "area",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "line",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "amps",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "speed",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "vibration",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "error",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "lastServiceDate",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "DateTime"
+        }, {
+          "attributeType" : "Internal",
+          "name" : "lastServiceNotes",
+          "nullable" : false,
+          "required" : false,
+          "array" : false,
+          "internalType" : "Any"
+        } ]
+      } ],
+      "instances" : [ {
+        "name" : "motor001",
+        "tags" : [ "starter_solution" ],
+        "model" : "motors",
+        "rootValueAs" : "Object",
+        "template" : {
+          "type" : "Off"
         },
-        "breakupArrays" : false,
-        "table" : "TestHyperTableTime294Pk1",
-        "createHypertable" : true,
-        "partitionType" : "timespan",
-        "partitionInterval" : {
-          "duration" : 1,
-          "units" : "Minutes"
+        "executeMode" : "V4",
+        "initExpression" : "",
+        "attributes" : [ {
+          "name" : "motorId",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "path" : ""
+            }
+          },
+          "defaultValue" : "motor001"
+        }, {
+          "name" : "site",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "path" : ""
+            }
+          },
+          "defaultValue" : "Portland"
+        }, {
+          "name" : "area",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "path" : ""
+            }
+          },
+          "defaultValue" : "Area-1"
+        }, {
+          "name" : "line",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Empty",
+              "name" : "",
+              "params" : { },
+              "path" : ""
+            }
+          },
+          "defaultValue" : "Line-1"
+        }, {
+          "name" : "amps",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Motor001_PLC_Amps",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "opc"
+            }
+          }
+        }, {
+          "name" : "speed",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Motor001_PLC_Speed",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "opc"
+            }
+          }
+        }, {
+          "name" : "vibration",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Motor001_PLC_Vibration",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "opc"
+            }
+          }
+        }, {
+          "name" : "error",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "Motor001_PLC_Error",
+              "params" : { },
+              "path" : "",
+              "connectionName" : "opc"
+            }
+          }
+        }, {
+          "name" : "lastServiceDate",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "get_motor001_service_info",
+              "params" : { },
+              "path" : "[0].lastservicedate",
+              "connectionName" : "sql"
+            }
+          }
+        }, {
+          "name" : "lastServiceNotes",
+          "expression" : {
+            "type" : "Reference",
+            "reference" : {
+              "type" : "Input",
+              "name" : "get_motor001_service_info",
+              "params" : { },
+              "path" : "[0].Notes",
+              "connectionName" : "sql"
+            }
+          }
+        } ],
+        "parameters" : {
+          "type" : "EmptyParameters"
+        }
+      } ]
+    },
+    "pipelines" : [ {
+      "name" : "motor001_to_mqtt",
+      "tags" : [ "starter_solution" ],
+      "inputStages" : [ "To_MQTT" ],
+      "stages" : [ {
+        "name" : "To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
         },
-        "partitionBy" : "col1",
-        "primaryKey" : "id"
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.mqtt}}",
+          "qualifier" : {
+            "topic" : "{{event.value.site}}/{{event.value.area}}/{{event.value.line}}/assets/motors/{{event.value.motorId}} ",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "ignore"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : false,
+      "triggers" : [ {
+        "name" : "FlowTrigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 1,
+              "units" : "Seconds"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.motor001}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "type" : "Off"
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
+      }
+    }, {
+      "name" : "motor001_to_mqtt_copy",
+      "tags" : [ "starter_solution" ],
+      "inputStages" : [ "To_MQTT" ],
+      "stages" : [ {
+        "name" : "To_MQTT",
+        "display" : {
+          "position" : {
+            "x" : 240,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".DynamicWriteConfig",
+          "failureOutputs" : [ ],
+          "connectionReference" : "{{Connection.mqtt}}",
+          "qualifier" : {
+            "topic" : "{{event.value.site}}/{{event.value.area}}/{{event.value.line}}/assets/motors/{{event.value.motorId}} ",
+            "qos" : 0,
+            "namedRoot" : false,
+            "retained" : false,
+            "breakupArrays" : false,
+            "filterList" : [ "_name", "_model" ]
+          },
+          "qualifierExpression" : "",
+          "writeReturn" : "completion"
+        },
+        "outputs" : [ "Return" ]
+      }, {
+        "name" : "Return",
+        "display" : {
+          "position" : {
+            "x" : 669,
+            "y" : 1
+          }
+        },
+        "config" : {
+          "type" : ".ReturnConfig"
+        },
+        "outputs" : [ ]
+      } ],
+      "trackActivity" : true,
+      "triggers" : [ {
+        "name" : "FlowTrigger",
+        "display" : {
+          "position" : {
+            "x" : -450,
+            "y" : 0
+          }
+        },
+        "config" : {
+          "type" : ".TriggerFlow",
+          "enabled" : false,
+          "flowEvaluation" : {
+            "type" : "Polled",
+            "interval" : {
+              "duration" : 1,
+              "units" : "Seconds"
+            },
+            "mode" : "Always",
+            "expression" : "",
+            "delay" : {
+              "duration" : 0,
+              "units" : "Seconds"
+            }
+          },
+          "inReferences" : [ "{{Instance.motor001}}" ],
+          "publishMode" : "All",
+          "template" : {
+            "type" : "Off"
+          }
+        }
+      }, {
+        "name" : "APITrigger",
+        "display" : {
+          "position" : {
+            "x" : -453,
+            "y" : -123
+          }
+        },
+        "config" : {
+          "type" : ".TriggerApi",
+          "enabled" : true,
+          "parameters" : {
+            "type" : "EmptyParameters"
+          }
+        }
+      } ],
+      "errorHandler" : {
+        "type" : "default"
       }
     } ],
-    "modeling" : {
-      "models" : [ ],
-      "instances" : [ ]
-    },
-    "pipelines" : [ ],
-    "tags" : [ ],
+    "tags" : [ {
+      "name" : "starter_solution"
+    } ],
     "functions" : [ ],
     "namespace" : [ ]
   },
   "network" : {
     "version" : 0,
-    "groups" : [ ],
-    "hubs" : [ ]
+    "groups" : [ {
+      "name" : "demoHub",
+      "token" : "WShpkvFdHuXeOog-zu4xfkeoKsrG5riT"
+    } ],
+    "hubs" : [ {
+      "name" : "highbyteEdgeNode1r",
+      "description" : "",
+      "clientId" : "a2400488-3d4c-4a96-914e-25e0e0c1151e",
+      "networkGroup" : "demoHub"
+    }, {
+      "name" : "highbyteEdgeNode2r",
+      "description" : "",
+      "clientId" : "cda4242c-d6fc-4768-959e-d7738b7f688c",
+      "networkGroup" : "demoHub"
+    } ]
   },
   "accessControl" : {
-    "apiKeys" : [ ],
+    "apiKeys" : [ {
+      "friendlyName" : "qwe",
+      "expiration" : 1783036799000,
+      "version" : 1,
+      "algorithm" : "SHA-256",
+      "user" : "mcpUser",
+      "hash" : "B4r/BJlwxDID6X3zvlf+HhdPXrQEfG5sc9Wx7YiChQ4="
+    } ],
     "version" : 0,
     "roles" : [ {
       "name" : "admin",
@@ -119,8 +623,17 @@
     "users" : [ {
       "name" : "administrator",
       "credentials" : {
-        "salt" : "7Th2sfhH5O3wNvJV1cp2jw==",
-        "hashedPassword" : "8oce9aekS6TWBlRIak6FekwNsgnaleCyHXru/DwIst/38lU1aR47Ua2mkwakLNcgJjx/BsTHHU6EsEgeboK1ew=="
+        "salt" : "JuJzPPtwHp/LP0yRaQGxDA==",
+        "hashedPassword" : "TxMamoCxihL2b1bKBAY0tZmezEiIug0r7F+cWCjrydJ3J02PGh7EP1BPdRGvV4EaG6OQ/G/HRp/dkB5ou3/DuA=="
+      },
+      "policyVersion" : 1,
+      "roles" : [ "admin" ],
+      "claims" : [ ]
+    }, {
+      "name" : "mcpUser",
+      "credentials" : {
+        "salt" : "cH4r0ktcYSkGXKFL+iGAWA==",
+        "hashedPassword" : "aiH7TAgubDGV3DyRJTfO+eXVfI9EdD1wy3NsF1NcQlFAW3fTbrisGxc1YmLyVxqgk5DWhMC/7LkoNdxgsCc/bQ=="
       },
       "policyVersion" : 1,
       "roles" : [ "admin" ],
@@ -131,7 +644,18 @@
     "version" : 0,
     "variables" : [ ],
     "secrets" : [ ],
-    "certificates" : [ ],
+    "certificates" : [ {
+      "alias" : "app-certificate-private-key",
+      "chain" : "MIIETTCCAzWgAwIBAgIJAKLwtPoERi8xMA0GCSqGSIb3DQEBCwUAMFExMDAuBgNVBAMMJ0hpZ2hCeXRlL0ludGVsbGlnZW5jZUh1YkBUSElSQU8tSk1TR1JWMzEQMA4GA1UECgwHVW5rbm93bjELMAkGA1UEBhMCVVMwHhcNMjUwNzAyMTUzMzQ2WhcNMzAwNzAxMTUzMzQ2WjBRMTAwLgYDVQQDDCdIaWdoQnl0ZS9JbnRlbGxpZ2VuY2VIdWJAVEhJUkFPLUpNU0dSVjMxEDAOBgNVBAoMB1Vua25vd24xCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw7QTZmr4+AkJDPtMHPOLGtSN4anbvkNKy9CDco2Hy7qi/nInG6caHj304GpvyjZFVTwq3MkK5I78CUgrgQbJT0bkyTZHGXNG38+/Z23bTqwPsrQjZxAkfvU5By0i562fQQo2W+k6Gaok4jx8J0+2wSO1KwubCo0pWvrgMReOYlAfHnPy9zbbnvRRp2/V8nRFfyzdKk19TydTodUAkLVhFA2HuJxIKRpi7oEad+hmfA3HJt+jZXo6WaGBQq/TcCpKNisJn/pc72cUX6RlWL6CAmPdGr/dExOKsATb+mfevvRrt/u+2456ikkhmLyszvLlFm4KqWs7ZC1YcKyIwdPQ2QIDAQABo4IBJjCCASIwRgYDVR0RBD8wPYYrdXJuOlRISVJBTy1KTVNHUlYzOkhpZ2hCeXRlOkludGVsbGlnZW5jZUh1YoIOVEhJUkFPLUpNU0dSVjMwCwYDVR0PBAQDAgL0MB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMB0GA1UdDgQWBBSi5q/EC+BB9738Vm3YroOc/jOyVjCBgQYDVR0jBHoweIAUouavxAvgQfe9/FZt2K6DnP4zslahVaRTMFExMDAuBgNVBAMMJ0hpZ2hCeXRlL0ludGVsbGlnZW5jZUh1YkBUSElSQU8tSk1TR1JWMzEQMA4GA1UECgwHVW5rbm93bjELMAkGA1UEBhMCVVOCCQCi8LT6BEYvMTANBgkqhkiG9w0BAQsFAAOCAQEAXaOh+pX8TLC/jR4yIGuPBhbP255kYvDJg/MAU7EMk7qh7RhwOoZUMayOgzdEnYHIrOscf3UwmIUu1Y0gRoIpe/RlGtguXqm3jX16OkPhELGq+FWZa0c+MDpCPFAeSgDmEhsVLnWdZvqX7sNIsiZYthRDFMiNTR/jei5AoW0m2T2hlufK24Kn251xLO38LFwGrFAq4FmXcyzMnFPfqEn0csrB3tAf9poVi2IivXWwrrBmg9zVg4sGybHFy4L+bMzRC8jWkj9CG6fzW5DE97nB1uXrcrwH8VVwKovwYDO5BaZn9LrIxuWKjhyBdHvAZtedaAfCkP1j/BRcXFqbCmA4lA==",
+      "encryptKey" : {
+        "type" : "Encrypted",
+        "value" : {
+          "keyId" : "fTx5IyQ88hAr6pY/vmS1/g==",
+          "iv" : "HzkSU05KmWCPz/QhI2Nf1w==",
+          "ciphertext" : "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"
+        }
+      }
+    } ],
     "settings" : {
       "version" : 0,
       "directories" : { },
@@ -145,12 +669,12 @@
         "scheme" : "http",
         "schemeCertificate" : "ssl-certificate-private-key",
         "port" : 45245,
-        "centralConfig" : false,
+        "centralConfig" : true,
         "autoSaveIntervalSeconds" : 60,
         "backupCopies" : 50
       },
       "hbMqttBroker" : {
-        "enabled" : false,
+        "enabled" : true,
         "allowAnonymous" : true,
         "endpoints" : [ {
           "hostname" : "0.0.0.0",
@@ -167,14 +691,14 @@
         } ]
       },
       "restDataServer" : {
-        "enabled" : false,
+        "enabled" : true,
         "hostname" : "0.0.0.0",
         "port" : 8885,
         "useHttps" : false,
         "schemeCertificate" : "",
         "allowAnonymous" : false,
         "authenticationModes" : [ "API_KEY" ],
-        "mcpServerEnabled" : false,
+        "mcpServerEnabled" : true,
         "mcpServerPort" : 45345
       },
       "log" : {
@@ -206,17 +730,17 @@
           "type" : "git",
           "name" : "HubBackup",
           "uri" : "https://github.com/taicho-hb/testRepo.git",
-          "author" : "HighByte IntelligenceHub123",
-          "email" : "<>123",
+          "author" : "HighByte IntelligenceHub",
+          "email" : "<>",
           "auth" : {
             "type" : "pass",
             "username" : "taicho-hb",
             "password" : {
               "type" : "Encrypted",
               "value" : {
-                "keyId" : "RbXxSWynQtxdLvstv2bhjw==",
-                "iv" : "ZUhMkYAg7vkKm/RWd8gVDA==",
-                "ciphertext" : "3S05bnlEfe96cXOHVDhfUZAkub6MDTX9xNz2xj67j4DfZZQm0ZWz+unaekb1T8vh"
+                "keyId" : "fTx5IyQ88hAr6pY/vmS1/g==",
+                "iv" : "Itvoolgn5o6KZpXmuRTW1A==",
+                "ciphertext" : "yHEip3puVNEUP1T3HC8npzC10Ya7VLlJIaxd1NVekwJgmocovIIuQqmsMRDujkys"
               }
             }
           }
